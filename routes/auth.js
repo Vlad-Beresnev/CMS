@@ -1,3 +1,4 @@
+const { TIMEOUT } = require('dns');
 const fs = require('fs')
 
 const registerUser = (userData) => {
@@ -25,11 +26,33 @@ const existingUser = (username) => {
 
 const userSession = {}
 
+var sessionId = function () {
+    var rand = function() {
+        return Math.random().toString(36).substr(2);
+    }
+    return rand() + rand();
+}
+
+// logout function
+function logout(userSession)  {
+    userSession['id'] = ''
+    userSession['username'] = ''
+    userSession['password'] = ''
+    userSession['role'] = ''
+    console.log(`user's session has been deleted : ${userSession}`)
+}
+
 
 const authRoutes = (req, res) => {
     const url = req.url || ''
     if (url === '/auth/login') {
-        if (req.method === 'POST') {
+        // GET METHOD
+        if (req.method === 'GET') {
+            res.writeHead(200, { 'Contente-Type': 'text/plain'})
+            res.end('Login Form')
+        }
+        // POST METHOD
+        else if (req.method === 'POST') {
             let data = ''
 
             req.on('data', (chunk) => {
@@ -42,8 +65,10 @@ const authRoutes = (req, res) => {
                 const user = authenticateUser(username, password)
 
                 if (user) {
-                    userSession[0] = user.username
-                    userSession[1] = user.role
+                    userSession["id"] = sessionId()
+                    userSession["username"] = user.username
+                    userSession["password"] = user.password
+                    userSession["role"] = user.role
                 
                     res.writeHead(200, { 'Contente-Type': 'text/plain'})
                     res.end('Login Successful')
@@ -63,15 +88,18 @@ const authRoutes = (req, res) => {
         res.end('Method Not Allowed');
     }
     } else if (url === '/auth/users') {
+        // GET METHOD
         if (req.method === 'GET') {
-            if (userSession[1] === 'admin') {
+            if (userSession["role"] === 'admin') {
                 res.writeHead(200, { 'Content-Type': 'text/plain', 'Allow': 'GET, POST' });
                 res.end('Users Management');
             } else {
                 res.writeHead(403, { 'Content-Type': 'text/plain' });
                 res.end('Forbidden: Only admin users can access this route');
             }
-        } else if (req.method === 'POST') {
+        } 
+        // POST METHOD
+        else if (req.method === 'POST') {
             let data = '';
             req.on('data', (chunk) => {
                 data += chunk
@@ -103,6 +131,8 @@ const authRoutes = (req, res) => {
                     res.end('Internal Server Error');
                 }
             })
+        // DELETE METHOD
+        } else if (req.method === 'DELETE') {
         } else {
             res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET, POST' });
             res.end('Method Not Allowed');
