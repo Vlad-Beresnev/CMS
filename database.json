@@ -1,0 +1,15 @@
+{
+  "users": [
+    {
+      "username": "admin",
+      "password": "taitaja2022",
+      "role": "admin"
+    },
+    {
+        "username": "editori",
+        "password": "taitaja2022",
+        "role": "editori"
+      }
+  ],
+  "pages": []
+}
