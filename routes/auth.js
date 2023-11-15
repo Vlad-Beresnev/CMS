@@ -23,7 +23,7 @@ const existingUser = (username) => {
     return user
 }
 
-const userSessions = {}
+const userSession = {}
 
 
 const authRoutes = (req, res) => {
@@ -38,14 +38,16 @@ const authRoutes = (req, res) => {
 
             req.on('end', () => {
                 try {
-                const { username, password} = JSON.parse(data)
+                const { username, password, role} = JSON.parse(data)
                 const user = authenticateUser(username, password)
 
                 if (user) {
-                    userSessions[username] = {role: user.role}
+                    userSession[0] = user.username
+                    userSession[1] = user.role
+                
                     res.writeHead(200, { 'Contente-Type': 'text/plain'})
                     res.end('Login Successful')
-                    console.log(user.role)
+                    console.log(userSession)
                 } else {
                     res.writeHead(401, { 'Contente-Type': 'text/plain'})
                     res.end('Invalid credentials')
@@ -62,9 +64,7 @@ const authRoutes = (req, res) => {
     }
     } else if (url === '/auth/users') {
         if (req.method === 'GET') {
-            const username = req.headers
-
-            if (userSessions[username] === 'admin') {
+            if (userSession[1] === 'admin') {
                 res.writeHead(200, { 'Content-Type': 'text/plain', 'Allow': 'GET, POST' });
                 res.end('Users Management');
             } else {
