@@ -1,5 +1,6 @@
 const fs = require('fs')
 const urlModule = require('url')
+const argon2 = require('argon2')
 
 const registerUser = (userData) => {
     const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
@@ -72,12 +73,12 @@ const authRoutes = (req, res) => {
                 data += chunk
             })
 
-            req.on('end', () => {
+            req.on('end', async () => {
                 try {
-                const { username, password, role} = JSON.parse(data)
-                const user = authenticateUser(username, password)
+                const { username, new_password} = JSON.parse(data)
+                const user = existingUser(username)
 
-                if (user) {
+                if (argon2.verify(user.password, new_password)) {
                     userSession["id"] = sessionId()
                     userSession["username"] = user.username
                     userSession["password"] = user.password
@@ -120,14 +121,15 @@ const authRoutes = (req, res) => {
                     data += chunk
                 })
 
-                req.on('end', () => {
+                req.on('end', async () => {
                     try {
-                    const { username, password, role } = JSON.parse(data)
+                    const { username, new_password, role } = JSON.parse(data)
 
-                    if (!username || !password || !role) {
+                    if (!username || !new_password || !role) {
                         res.writeHead(400, { 'Content-Type': 'text/plain' })
                         res.end('Username, password and role required')
                     } else {
+                        const password = await argon2.hash(new_password)
                         const userExist = existingUser(username)
 
                         if (userExist) {
