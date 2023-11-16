@@ -6,10 +6,20 @@
       "role": "admin"
     },
     {
-        "username": "editori",
-        "password": "taitaja2022",
-        "role": "editori"
-      }
+      "username": "editori",
+      "password": "taitaja2022",
+      "role": "editori"
+    },
+    {
+      "username": "user",
+      "password": "123456",
+      "role": "admin"
+    },
+    {
+      "username": "user3",
+      "password": "123456",
+      "role": "editori"
+    }
   ],
   "pages": []
 }
