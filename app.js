@@ -9,6 +9,8 @@ const app = http.createServer((req, res) => {
     }
     else if (url.startsWith('/content')) {
         contentRoutes(req, res);
+    } else if (url.startsWith('/intranet')) {
+        contentRoutes(req, res);
     }
     else {
         res.writeHead(404, { 'Content-Type': 'text/plain'});
