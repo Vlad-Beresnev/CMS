@@ -1,7 +1,5 @@
-const e = require('express')
 const fs = require('fs')
-
-
+const urlModule = require('url')
 
 const existingPage = (page_name) => {
     const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
@@ -16,7 +14,7 @@ const creatingPage = (pageData) => {
     
     //ID Number
     const maxId = Math.max(...database.pages.map((page) => page.id), 0)
-    const newId = maxId + 1
+    const newId = (maxId + 1).toString()
 
     //URL formating
     const page_name = pageData.page_name
@@ -33,16 +31,81 @@ const creatingPage = (pageData) => {
 
     }
 
+    const timestamp = new Date().toISOString()
+
     const defaultPageData = {
         id: newId,
-        url: url(page_name)
+        url: url(page_name),
     }
 
-    const mergedPageData = { ...defaultPageData, ...pageData }
+    const timestampData = {
+        created_at: timestamp
+    }
+
+    const mergedPageData = { ...defaultPageData, ...pageData, ...timestampData }
     
     database.pages.push(mergedPageData)
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2))
 }
+
+const updateUrl = (pageName) => {
+    // Make it lowercase
+    let formattedUrl = pageName.toLowerCase()
+    // Replace spaces with dashes
+    formattedUrl = formattedUrl.replace(/\s+/g, '-')
+    // Remove symbols using a regular expression
+    formattedUrl = formattedUrl.replace(/[^\w-]/g, '')
+
+    return formattedUrl
+
+}
+
+const patchPage = (pageId, updatedData) => {
+    const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
+
+    const pageIndex = database.pages.findIndex((page) => page.id === pageId)
+
+    if (pageIndex === -1) {
+        return null
+    }
+    const originalPage = database.pages[pageIndex]
+
+    const timestamp = new Date().toISOString()
+    
+    originalPage.modified_at = timestamp
+
+    const newVersionId = '-' + originalPage.id
+    
+    const newVersion = {
+        id: newVersionId,
+        url: updateUrl(originalPage.page_name),
+        page_name: originalPage.page_name,
+        page_heading: originalPage.page_heading,
+        text: originalPage.text,
+        image: originalPage.image,
+        background_image: originalPage.background_image,
+        address: originalPage.address,
+        phone: originalPage.phone,
+        email: originalPage.email,
+        created_at: originalPage.created_at,
+        modified_at: timestamp,
+    };
+
+    originalPage.url = updateUrl(originalPage.page_name)
+
+    // Update the existing page with the new data
+    database.pages[pageIndex] = {
+        ...originalPage,
+        ...updatedData,
+    };
+
+    database.pages.push(newVersion);
+
+    // Save the updated database to the file
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+
+    return newVersion;
+} 
 
 const contentRoutes = (req, res) => {
     const url = req.url || ''
@@ -90,13 +153,23 @@ const contentRoutes = (req, res) => {
             pages.forEach((page) => {
                 res.write(`
                 <ul>
-                    <li>${page.name} - ${page.heading}</li>
+                    <li>${page.page_name} - ${page.page_heading}</li>
                 </ul>
             `)
             })
             res.end('Welcome Intranet Page!')
             
-        } else if (req.method === 'POST') {
+        } 
+        else {
+            res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
+            res.end('Method Not Allowed');
+        }
+    } else if (url === "/intranet/add") {
+        if (req.method === 'GET') {
+            res.writeHead(200, { 'Content-Type': 'text/html'})
+            res.end('View Add Content Form')
+        }
+        else if (req.method === 'POST') {
             let data = ''
 
             req.on('data', (chunk) => {
@@ -116,7 +189,7 @@ const contentRoutes = (req, res) => {
                             res.end("Page's name already exists")
                         } else {
                             creatingPage({ page_name, page_heading, text, image, background_image, address, phone, email })
-                            console.log('User created:', { page_name, page_heading, text, image, background_image, address, phone, email })
+                            console.log('Page created:', { page_name, page_heading, text, image, background_image, address, phone, email })
                             res.writeHead(201, { 'Content-Type': 'text/plain' })
                             res.end('User created successfully')
                         }
@@ -128,16 +201,75 @@ const contentRoutes = (req, res) => {
                 }
             })
         } 
-        else {
-            res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
-            res.end('Method Not Allowed');
+        
+    } else if ( url.startsWith('/intranet/edit')) {
+        const parsedUrl = urlModule.parse(req.url, true);
+        const pageId = parsedUrl.pathname.split('/').pop();
+        if (req.method === 'GET') {
+            const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
+            
+
+            console.log('Page ID: ', pageId)
+
+            if (!pageId) {
+                res.writeHead(400, { 'Content-Type': 'text/plain' });
+                res.end('Page ID to edit is required');
+            } else {
+                const pageIndex = database.pages.findIndex(page => page.id === pageId);
+
+                console.log('Page Index:', pageIndex);
+                if (pageIndex === -1) {
+                    console.log('No Index', pageId)
+                    res.writeHead(404, { 'Content-Type': 'text/plain' });
+                    res.end('Page not found');
+                } else {
+                    // Get the page details for editing
+                    const pageToEdit = database.pages[pageIndex];
+                    console.log('Page to Edit:', pageToEdit);
+                    // Render the edit form or view, you can customize this part
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    res.end(`Edit Form for Page ID: ${pageId}, Name: ${pageToEdit.page_name}`);
+                }
+            }
+        } else if (req.method === 'PATCH') {
+        const parseUrl = urlModule.parse(req.url, true)
+        const pageId = parsedUrl.pathname.split('/').pop()
+        
+        let data = ''
+
+        req.on('data', (chunk) => {
+            data += chunk
+        })
+
+        req.on('end', async () => {
+            try {
+                const updatedData = JSON.parse(data);
+
+                const updatedPage = patchPage(pageId, updatedData);
+
+                if (updatedPage) {
+                    res.writeHead(200, { 'Content-Type': 'text/plain' });
+                    res.end(`Page ${pageId} updated successfully!`);
+                } else {
+                    res.writeHead(404, { 'Content-Type': 'text/plain' });
+                    res.end('Page not found');
+                }
+            } catch (error) {
+                console.error('Error parsing request body:', error);
+                res.writeHead(400, { 'Content-Type': 'text/plain' });
+                res.end('Bad Request');
+            }
+        })
+        
         }
-    }
+        
+
     else {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.write('Not Found')
         res.end()
     }
 }
-
+}
 
 module.exports = contentRoutes
