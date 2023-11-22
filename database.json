@@ -9,134 +9,66 @@
       "username": "editori",
       "password": "$argon2id$v=19$m=65536,t=3,p=4$My3SKwMbJ6Rz66DiIIZK4g$GABiEtjdMW8G9qsFCQALxYEfEYtgpv45gCOnJzpinjM",
       "role": "editori"
+    },
+    {
+      "username": "peter",
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$7DQs3OeT3A3JedpsAJyqbQ$OrQOTuuKr2N+poLK+56078BzPzqLqi420RjsFHgjOtI",
+      "role": "admin"
+    },
+    {
+      "username": "emilia",
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$RUzMLBEqQgf3gCgSGodsGQ$D2P2rtO5pz9XFkXgmDees0XiacLPiNw/8kwsI3hySqY",
+      "role": "admin"
+    },
+    {
+      "username": "who is who",
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$ZopnoXLneSaxKRidh6A8fg$FfEGSFrszzSyPZxIvxnTkaN37aH7Oi+Yv4RFfGRcDC4",
+      "role": "admin"
+    },
+    {
+      "username": "who ",
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$Ho/F+dzZHL9MZb6PgjhnIA$ZUsOgqmqp3yjaPyN3bupHVKumaeNNKVsCDuM/P/reLw",
+      "role": "admin"
+    },
+    {
+      "username": "who2 ",
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$TBp2UHVo55PcQBlR4RcRCw$K1cGLwvZLf7L4lChac94B/LPcsv4z+5je1LZKf4yP8A",
+      "role": "admin"
+    },
+    {
+      "username": "who3",
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$mIxQm7G1FUrQjHAuf3Gjzg$lOnB9xnTHekM7IeXy/Y718VbAEsDLw+TNR5zOT9/aqY",
+      "role": "admin"
     }
   ],
   "pages": [
     {
-      "id": "12",
+      "id": "1",
       "url": "new-page",
-      "created_at": "2023-11-21T08:05:42.578Z",
-      "page_name": "Updated Page 222",
-      "page_heading": "Updated Page Heading",
-      "text": "Updated Page Text",
-      "image": "new-image-url.jpg",
-      "background_image": "new-background-image-url.jpg",
-      "address": "peter@gmail.com",
-      "phone": "New Phone Number",
-      "email": "new.email@example.com",
-      "modified_at": "2023-11-21T08:09:10.935Z"
-    },
-    {
-      "id": "-12",
-      "url": "new-page",
-      "created_at": "2023-11-21T08:05:42.578Z",
-      "modified_at": "2023-11-21T08:05:57.621Z",
+      "author": "who2 ",
       "page_name": "New Page",
-      "page_heading": "Secret of Universe.",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a pretium ex. Fusce rhoncus lacus eget diam varius, vitae congue elit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nNunc eget diam et eros iaculis ornare. Nunc diam dui, venenatis eu tellus et, fermentum dictum felis. Sed semper lectus id facilisis viverra. Phasellus sit amet magna id lectus cursus vulputate. Quisque augue leo, ornare eu mattis quis, dignissim a erat.\n\nOrci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc eget diam et eros iaculis ornare. Nunc diam dui, venenatis eu tellus et, fermentum dictum felis.",
-      "image": "./public/images/universe.png",
-      "background_image": "./public/background/black-hole.png",
-      "address": "Helsinginkatu 25",
-      "phone": "0403620904",
-      "email": "beresnev.explorer@gmail.com"
+      "page_heading": "New Heading",
+      "text": "Here will be your text",
+      "image": "example-image-url.png",
+      "background_image": "example-background-image-url.png",
+      "address": "example 25 B 12",
+      "phone": "1234567890",
+      "email": "example@gmail.com",
+      "created_at": "2023-11-22T09:44:19.268Z"
     },
     {
-      "id": "-12",
+      "id": "2",
       "url": "new-page",
-      "created_at": "2023-11-21T08:05:42.578Z",
-      "modified_at": "2023-11-21T08:09:10.935Z",
-      "page_name": "Updated Page 222",
-      "page_heading": "Updated Page Heading",
-      "text": "Updated Page Text",
-      "image": "new-image-url.jpg",
-      "background_image": "new-background-image-url.jpg",
-      "address": "peter@gmail.com",
-      "phone": "New Phone Number",
-      "email": "new.email@example.com"
-    },
-    {
-      "id": "13",
-      "url": "updated-page-222",
-      "page_name": "Updated Page 222",
-      "page_heading": "Updated Page Heading",
-      "text": "Updated Page Text",
-      "image": "new-image-url.jpg",
-      "background_image": "new-background-image-url.jpg",
-      "address": "peter@gmail.com",
-      "phone": "New Phone Number",
-      "email": "new.email@example.com",
-      "created_at": "2023-11-21T08:11:05.549Z",
-      "modified_at": "2023-11-21T08:14:22.026Z"
-    },
-    {
-      "id": "-13",
-      "url": "time-time",
-      "created_at": "2023-11-21T08:11:05.549Z",
-      "modified_at": "2023-11-21T08:11:18.786Z",
-      "page_name": "Time Time",
-      "page_heading": "Secret of Universe.",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a pretium ex. Fusce rhoncus lacus eget diam varius, vitae congue elit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nNunc eget diam et eros iaculis ornare. Nunc diam dui, venenatis eu tellus et, fermentum dictum felis. Sed semper lectus id facilisis viverra. Phasellus sit amet magna id lectus cursus vulputate. Quisque augue leo, ornare eu mattis quis, dignissim a erat.\n\nOrci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc eget diam et eros iaculis ornare. Nunc diam dui, venenatis eu tellus et, fermentum dictum felis.",
-      "image": "./public/images/universe.png",
-      "background_image": "./public/background/black-hole.png",
-      "address": "Helsinginkatu 25",
-      "phone": "0403620904",
-      "email": "beresnev.explorer@gmail.com"
-    },
-    {
-      "id": "-13",
-      "url": "time-time",
-      "page_name": "Updated Page 222",
-      "page_heading": "Updated Page Heading",
-      "text": "Updated Page Text",
-      "image": "new-image-url.jpg",
-      "background_image": "new-background-image-url.jpg",
-      "address": "peter@gmail.com",
-      "phone": "New Phone Number",
-      "email": "new.email@example.com",
-      "created_at": "2023-11-21T08:11:05.549Z",
-      "modified_at": "2023-11-21T08:12:52.300Z"
-    },
-    {
-      "id": "-13",
-      "url": "time-time",
-      "page_name": "Updated Page 222",
-      "page_heading": "Updated Page Heading",
-      "text": "Updated Page Text",
-      "image": "new-image-url.jpg",
-      "background_image": "new-background-image-url.jpg",
-      "address": "peter@gmail.com",
-      "phone": "New Phone Number",
-      "email": "new.email@example.com",
-      "created_at": "2023-11-21T08:11:05.549Z",
-      "modified_at": "2023-11-21T08:13:00.224Z"
-    },
-    {
-      "id": "-13",
-      "url": "updated-page-222",
-      "page_name": "Updated Page 222",
-      "page_heading": "Updated Page Heading",
-      "text": "Updated Page Text",
-      "image": "new-image-url.jpg",
-      "background_image": "new-background-image-url.jpg",
-      "address": "peter@gmail.com",
-      "phone": "New Phone Number",
-      "email": "new.email@example.com",
-      "created_at": "2023-11-21T08:11:05.549Z",
-      "modified_at": "2023-11-21T08:13:25.946Z"
-    },
-    {
-      "id": "-13",
-      "url": "updated-page-222",
-      "page_name": "Updated Page 222",
-      "page_heading": "Updated Page Heading",
-      "text": "Updated Page Text",
-      "image": "new-image-url.jpg",
-      "background_image": "new-background-image-url.jpg",
-      "address": "peter@gmail.com",
-      "phone": "New Phone Number",
-      "email": "new.email@example.com",
-      "created_at": "2023-11-21T08:11:05.549Z",
-      "modified_at": "2023-11-21T08:14:22.026Z"
+      "author": "who3",
+      "page_name": "New Page",
+      "page_heading": "New Heading",
+      "text": "Here will be your text",
+      "image": "example-image-url.png",
+      "background_image": "example-background-image-url.png",
+      "address": "example 25 B 12",
+      "phone": "1234567890",
+      "email": "example@gmail.com",
+      "created_at": "2023-11-22T09:44:40.020Z"
     }
   ]
 }

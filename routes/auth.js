@@ -2,10 +2,62 @@ const fs = require('fs')
 const urlModule = require('url')
 const argon2 = require('argon2')
 
+const defaultPage = (authorPage, existingDatabase) => {
+    const database = JSON.parse(JSON.stringify(existingDatabase));
+    
+    //ID Number
+    const maxId = Math.max(...database.pages.map((page) => page.id), 0)
+    const newId = (maxId + 1).toString()
+
+    //URL formating
+    const page_name = "New Page"
+
+    const pageData = {
+        page_name: "New Page",
+        page_heading: "New Heading",
+        text: "Here will be your text",
+        image: "example-image-url.png",
+        background_image: "example-background-image-url.png",
+        address: "example 25 B 12",
+        phone: "1234567890",
+        email: "example@gmail.com"
+    }
+    
+    const url = (pageName) => {
+        // Make it lowercase
+        let formattedUrl = pageName.toLowerCase()
+        // Replace spaces with dashes
+        formattedUrl = formattedUrl.replace(/\s+/g, '-')
+        // Remove symbols using a regular expression
+        formattedUrl = formattedUrl.replace(/[^\w-]/g, '')
+
+        return formattedUrl
+    }
+
+    const timestamp = new Date().toISOString()
+
+    const defaultPageData = {
+        id: newId,
+        url: url(page_name),
+        author: authorPage
+    }
+
+    const timestampData = {
+        created_at: timestamp
+    }
+
+    const mergedPageData = { ...defaultPageData, ...pageData, ...timestampData }
+    
+    database.pages.push(mergedPageData)
+    return database
+}
+
 const registerUser = (userData) => {
     const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
-    database.users.push(userData)
-    fs.writeFileSync('database.json', JSON.stringify(database, null, 2))
+    //database.users.push(userData)
+    const updatedDatabase = defaultPage(userData.username, database)
+    updatedDatabase.users.push(userData)
+    fs.writeFileSync('database.json', JSON.stringify(updatedDatabase, null, 2))
 }
 
 const authenticateUser = (username, password) => {
@@ -195,4 +247,7 @@ const authRoutes = (req, res) => {
 }
 
 
-module.exports = authRoutes
+module.exports = {
+    authRoutes,
+    userSession
+}

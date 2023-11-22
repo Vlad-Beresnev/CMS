@@ -1,10 +1,12 @@
 const fs = require('fs')
 const urlModule = require('url')
+const { userSession } = require('../routes/auth')
+
 
 const existingPage = (page_name) => {
     const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
     const page = database.pages.find(
-        (page) => page.page_name === page_name
+        (page) => page.page_name === page_name && !page.id.startsWith('-')
     )
     return page
 }
@@ -28,7 +30,6 @@ const creatingPage = (pageData) => {
         formattedUrl = formattedUrl.replace(/[^\w-]/g, '')
 
         return formattedUrl
-
     }
 
     const timestamp = new Date().toISOString()
@@ -36,6 +37,7 @@ const creatingPage = (pageData) => {
     const defaultPageData = {
         id: newId,
         url: url(page_name),
+        author: userSession.username
     }
 
     const timestampData = {
@@ -74,11 +76,16 @@ const patchPage = (pageId, updatedData) => {
     
     originalPage.modified_at = timestamp
 
-    const newVersionId = '-' + originalPage.id
+    //ID Number
+    const maxId = Math.min(...database.pages.map((page) => page.id), 0)
+    const newId = (maxId - 1).toString()
+
+    //const newVersionId = '-' + originalPage.id
     
     const newVersion = {
-        id: newVersionId,
+        id: newId,
         url: updateUrl(originalPage.page_name),
+        author: originalPage.author,
         page_name: originalPage.page_name,
         page_heading: originalPage.page_heading,
         text: originalPage.text,
@@ -107,7 +114,55 @@ const patchPage = (pageId, updatedData) => {
     return newVersion;
 } 
 
-const contentRoutes = (req, res) => {
+const deletePage = async (pageId) => {
+    try {
+        const database = JSON.parse(await fs.promises.readFile('database.json', 'utf-8'));
+
+        const pageIndex = database.pages.findIndex((page) => page.id === pageId);
+
+        if (pageIndex === -1) {
+            return null;
+        }
+
+        const deletedPage = database.pages.splice(pageIndex, 1)[0];
+        
+        //ID Number
+        const maxId = Math.min(...database.pages.map((page) => page.id), 0)
+        const newId = (maxId - 1).toString()
+
+        // Save last version
+        //const newVersionId = '-' + deletedPage.id
+        const timestamp = new Date().toISOString()
+        const newVersion = {
+            id: newId,
+            url: deletedPage.url,
+            author: deletedPage.author,
+            page_name: deletedPage.page_name,
+            page_heading: deletedPage.page_heading,
+            text: deletedPage.text,
+            image: deletedPage.image,
+            background_image: deletedPage.background_image,
+            address: deletedPage.address,
+            phone: deletedPage.phone,
+            email: deletedPage.email,
+            created_at: deletedPage.created_at,
+            deleted_at: timestamp,
+        };
+        
+        database.pages.push(newVersion);
+        
+        // Save the updated database to the file
+        await fs.promises.writeFile('database.json', JSON.stringify(database, null, 2));
+        
+        return deletedPage;
+    } catch (error) {
+        console.error('Error deleting page:', error);
+        throw error;
+    }
+};
+
+
+const contentRoutes = async (req, res) => {
     const url = req.url || ''
     if (url=== '/content/add') {
         if (req.method === 'GET') {
@@ -151,11 +206,13 @@ const contentRoutes = (req, res) => {
                 
             `)
             pages.forEach((page) => {
-                res.write(`
-                <ul>
-                    <li>${page.page_name} - ${page.page_heading}</li>
-                </ul>
-            `)
+                if (!page.id.startsWith('-')) {
+                    res.write(`
+                    <ul>
+                        <li>${page.page_name} - ${page.page_heading}</li>
+                    </ul>
+                `)
+                }
             })
             res.end('Welcome Intranet Page!')
             
@@ -164,11 +221,11 @@ const contentRoutes = (req, res) => {
             res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
             res.end('Method Not Allowed');
         }
-    } else if (url === "/intranet/add") {
+    } else if (url === "/intranet/add" && userSession.role === 'admin') {
         if (req.method === 'GET') {
             res.writeHead(200, { 'Content-Type': 'text/html'})
             res.end('View Add Content Form')
-        }
+        } 
         else if (req.method === 'POST') {
             let data = ''
 
@@ -184,14 +241,15 @@ const contentRoutes = (req, res) => {
                         res.writeHead(400, { 'Content-Type': 'text/plain' })
                         res.end('Username, password and role required')
                     } else {
-                        if (existingPage(page_name)) {
+                        const expage = existingPage(page_name)
+                        if (expage) {
                             res.writeHead(409, { 'Content-Type': 'text/plain' })
                             res.end("Page's name already exists")
                         } else {
                             creatingPage({ page_name, page_heading, text, image, background_image, address, phone, email })
                             console.log('Page created:', { page_name, page_heading, text, image, background_image, address, phone, email })
                             res.writeHead(201, { 'Content-Type': 'text/plain' })
-                            res.end('User created successfully')
+                            res.end('Page created successfully')
                         }
                     }
                 } catch(error) {
@@ -205,12 +263,9 @@ const contentRoutes = (req, res) => {
     } else if ( url.startsWith('/intranet/edit')) {
         const parsedUrl = urlModule.parse(req.url, true);
         const pageId = parsedUrl.pathname.split('/').pop();
-        if (req.method === 'GET') {
+        if (req.method === 'GET' && userSession.role === 'admin') {
             const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
             
-
-            console.log('Page ID: ', pageId)
-
             if (!pageId) {
                 res.writeHead(400, { 'Content-Type': 'text/plain' });
                 res.end('Page ID to edit is required');
@@ -231,7 +286,7 @@ const contentRoutes = (req, res) => {
                     res.end(`Edit Form for Page ID: ${pageId}, Name: ${pageToEdit.page_name}`);
                 }
             }
-        } else if (req.method === 'PATCH') {
+        } else if (req.method === 'PATCH' && userSession.role === 'admin') {
         const parseUrl = urlModule.parse(req.url, true)
         const pageId = parsedUrl.pathname.split('/').pop()
         
@@ -261,15 +316,53 @@ const contentRoutes = (req, res) => {
             }
         })
         
+    } else if (userSession.role !== 'admin') {
+        res.writeHead(403, { 'Content-Type': 'text/plain' });
+        res.end('Forbidden: Only admin users can access this route');
+    } 
+    
+    } else if (url.startsWith('/intranet/delete')) {
+        try {
+            if (req.method === 'GET' && userSession.role === 'admin') {
+                res.writeHead(200, { 'Content-Type': 'text/plain' })
+                res.end('Confirm the Deletion')
+            }
+            else if (req.method === 'DELETE' && userSession.role === 'admin') {
+                const parsedUrl = urlModule.parse(req.url, true);
+                const pageId = parsedUrl.pathname.split('/').pop();
+    
+                if (!pageId) {
+                    res.writeHead(400, { 'Content-Type': 'text/plain' });
+                    res.end('Page ID to delete is required');
+                } else {
+                    const deletedPage = await deletePage(pageId);
+    
+                    if (deletedPage) {
+                        res.writeHead(200, { 'Content-Type': 'text/plain' });
+                        res.end(`Page ${pageId} deleted successfully!`);
+                    } else {
+                        res.writeHead(404, { 'Content-Type': 'text/plain' });
+                        res.end('Page ID not found');
+                    }
+                }
+            } else if (userSession.role !== 'admin') {
+                res.writeHead(403, { 'Content-Type': 'text/plain' });
+                res.end('Forbidden: Only admin users can access this route');
+            }
+        } catch(error) {
+            console.error('Error parsing request body:', error);
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Bad Request');
         }
-        
-
+    } else if (userSession.role !== 'admin') {
+        res.writeHead(403, { 'Content-Type': 'text/plain' });
+        res.end('Forbidden: Only admin users can access this route');
+    }
     else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.write('Not Found')
         res.end()
     }
-}
 }
 
 module.exports = contentRoutes

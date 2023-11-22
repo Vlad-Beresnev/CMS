@@ -1,5 +1,5 @@
 const http = require('http')
-const authRoutes = require('./routes/auth')
+const { authRoutes } = require('./routes/auth')
 const contentRoutes = require('./routes/content')
 
 const app = http.createServer((req, res) => {
