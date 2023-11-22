@@ -263,14 +263,15 @@ const contentRoutes = async (req, res) => {
     } else if ( url.startsWith('/intranet/edit')) {
         const parsedUrl = urlModule.parse(req.url, true);
         const pageId = parsedUrl.pathname.split('/').pop();
-        if (req.method === 'GET' && userSession.role === 'admin') {
-            const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
-            
+
+        const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
+        const pageIndex = database.pages.findIndex(page => page.id === pageId);
+        const pageToEdit = database.pages[pageIndex];
+        if (req.method === 'GET' && userSession.role) {
             if (!pageId) {
                 res.writeHead(400, { 'Content-Type': 'text/plain' });
                 res.end('Page ID to edit is required');
             } else {
-                const pageIndex = database.pages.findIndex(page => page.id === pageId);
 
                 console.log('Page Index:', pageIndex);
                 if (pageIndex === -1) {
@@ -279,14 +280,14 @@ const contentRoutes = async (req, res) => {
                     res.end('Page not found');
                 } else {
                     // Get the page details for editing
-                    const pageToEdit = database.pages[pageIndex];
+                    
                     console.log('Page to Edit:', pageToEdit);
                     // Render the edit form or view, you can customize this part
                     res.writeHead(200, { 'Content-Type': 'text/html' });
                     res.end(`Edit Form for Page ID: ${pageId}, Name: ${pageToEdit.page_name}`);
                 }
             }
-        } else if (req.method === 'PATCH' && userSession.role === 'admin') {
+        } else if (req.method === 'PATCH' && userSession.role) {
         const parseUrl = urlModule.parse(req.url, true)
         const pageId = parsedUrl.pathname.split('/').pop()
         
@@ -315,8 +316,8 @@ const contentRoutes = async (req, res) => {
                 res.end('Bad Request');
             }
         })
-        
-    } else if (userSession.role !== 'admin') {
+       
+    }  else if (userSession.role !== 'admin') {
         res.writeHead(403, { 'Content-Type': 'text/plain' });
         res.end('Forbidden: Only admin users can access this route');
     } 

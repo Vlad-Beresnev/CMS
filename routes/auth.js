@@ -138,9 +138,8 @@ const authRoutes = (req, res) => {
                     userSession["role"] = user.role
                 
                     res.writeHead(200, { 'Contente-Type': 'application/json'})
-                    res.end(JSON.stringify(userSession), null, 2)
+                    res.end(`Welcome ${userSession.username}`)
                     console.log(userSession)
-                    console.log(userSession.username)
                 } else {
                     res.writeHead(401, { 'Contente-Type': 'text/plain'})
                     res.end('Invalid credentials')
