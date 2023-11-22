@@ -60,14 +60,17 @@ const registerUser = (userData) => {
     fs.writeFileSync('database.json', JSON.stringify(updatedDatabase, null, 2))
 }
 
-const authenticateUser = (username, password) => {
-    const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
-    const user = database.users.find(
-        (user) => user.username === username && user.password === password
-    )
-    console.log('Authenticated User:', user);
-    return user
-}
+const authenticateUser = async (username, password) => {
+    const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
+    const user = database.users.find((user) => user.username === username);
+
+    if (user && (await argon2.verify(user.password, password))) {
+        console.log('Authenticated User:', user);
+        return user;
+    }
+
+    return null;
+};
 
 const deleteUser = (usernameToDelete) => {
     const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
@@ -120,17 +123,15 @@ const authRoutes = (req, res) => {
         // POST METHOD
         else if (req.method === 'POST') {
             let data = ''
-
             req.on('data', (chunk) => {
                 data += chunk
             })
 
             req.on('end', async () => {
                 try {
-                const { username, new_password} = JSON.parse(data)
-                const user = existingUser(username)
-
-                if (argon2.verify(user.password, new_password)) {
+                const { username, new_password } = JSON.parse(data)
+                const user = await authenticateUser(username, new_password)
+                if (user && user.password) {
                     userSession["id"] = sessionId()
                     userSession["username"] = user.username
                     userSession["password"] = user.password

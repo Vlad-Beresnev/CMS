@@ -11,33 +11,8 @@
       "role": "editori"
     },
     {
-      "username": "peter",
-      "password": "$argon2id$v=19$m=65536,t=3,p=4$7DQs3OeT3A3JedpsAJyqbQ$OrQOTuuKr2N+poLK+56078BzPzqLqi420RjsFHgjOtI",
-      "role": "admin"
-    },
-    {
-      "username": "emilia",
-      "password": "$argon2id$v=19$m=65536,t=3,p=4$RUzMLBEqQgf3gCgSGodsGQ$D2P2rtO5pz9XFkXgmDees0XiacLPiNw/8kwsI3hySqY",
-      "role": "admin"
-    },
-    {
-      "username": "who is who",
-      "password": "$argon2id$v=19$m=65536,t=3,p=4$ZopnoXLneSaxKRidh6A8fg$FfEGSFrszzSyPZxIvxnTkaN37aH7Oi+Yv4RFfGRcDC4",
-      "role": "admin"
-    },
-    {
-      "username": "who ",
-      "password": "$argon2id$v=19$m=65536,t=3,p=4$Ho/F+dzZHL9MZb6PgjhnIA$ZUsOgqmqp3yjaPyN3bupHVKumaeNNKVsCDuM/P/reLw",
-      "role": "admin"
-    },
-    {
-      "username": "who2 ",
-      "password": "$argon2id$v=19$m=65536,t=3,p=4$TBp2UHVo55PcQBlR4RcRCw$K1cGLwvZLf7L4lChac94B/LPcsv4z+5je1LZKf4yP8A",
-      "role": "admin"
-    },
-    {
-      "username": "who3",
-      "password": "$argon2id$v=19$m=65536,t=3,p=4$mIxQm7G1FUrQjHAuf3Gjzg$lOnB9xnTHekM7IeXy/Y718VbAEsDLw+TNR5zOT9/aqY",
+      "username": "new_admin",
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$rMST9qLHDJWCqLx2JPMmiA$HDLcywJClLAiR1TT+u3s5hBAcFuaF1WKbvnF50LHSzo",
       "role": "admin"
     }
   ],
@@ -45,7 +20,7 @@
     {
       "id": "1",
       "url": "new-page",
-      "author": "who2 ",
+      "author": "new_admin",
       "page_name": "New Page",
       "page_heading": "New Heading",
       "text": "Here will be your text",
@@ -54,21 +29,7 @@
       "address": "example 25 B 12",
       "phone": "1234567890",
       "email": "example@gmail.com",
-      "created_at": "2023-11-22T09:44:19.268Z"
-    },
-    {
-      "id": "2",
-      "url": "new-page",
-      "author": "who3",
-      "page_name": "New Page",
-      "page_heading": "New Heading",
-      "text": "Here will be your text",
-      "image": "example-image-url.png",
-      "background_image": "example-background-image-url.png",
-      "address": "example 25 B 12",
-      "phone": "1234567890",
-      "email": "example@gmail.com",
-      "created_at": "2023-11-22T09:44:40.020Z"
+      "created_at": "2023-11-22T09:53:36.329Z"
     }
   ]
 }
