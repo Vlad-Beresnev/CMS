@@ -8,19 +8,37 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 20px 50px;
+    padding: 20px 20px;
     box-shadow: 0 1px 8px #ddd;
 }
 
 .logo {
     margin-right: auto;
-    font-size: 1.5em;
+    font-size: 32px;
+    padding: 10px 10px;
 }
 
 .navbar li {
     list-style: none;
     display: inline-block;
     padding: 0 20px;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav li {
+    padding: 10px 15px;
+    margin: 0 5px;
+}
+
+#login {
+    border-radius: 10px; /* Adjust the border radius as needed */
+    color: #fff;
+    border: 1px solid #000;
+    padding: 10px 40px;
 }
 
 .navbar a {
@@ -33,14 +51,57 @@
     color: #b2dfdb;
 }
 
-.sidebar.open {
-    animation: slideIn 0.3s ease-out;
+.sidebar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 1;
+    overflow: hidden;
+    transform: translateX(-100%);
 }
 
+.sidebar nav {
+    text-align: center;
+    margin-top: 50px;
+}
 
+.sidebar ul {
+    padding: 0;
+}
+
+.sidebar li {
+    display: block;
+    padding: 10px;
+}
+
+.sidebar a {
+    color: #555;
+    text-decoration: none;
+}
+
+.sidebar {
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+}
+
+.sidebar.open {
+    transform: translateX(0%);
+}
+
+.sidebar.close {
+    transform: translateX(100%); 
+}
 
 .menu-icon {
     display: none;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 32px;
+    margin-right: 10px;
 }
 
 @media (max-width: 510px) {
@@ -50,22 +111,13 @@
 
     .menu-icon {
         display: block;
-        cursor: pointer;
-        z-index: 2;
     }
 
     .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: white;
-        z-index: 1;
-        overflow: hidden;
-        transform: translateX(-100%);
+        display: block;
+        transform: translateX(100%);
     }
-
+/*
     .sidebar nav {
         text-align: center;
         margin-top: 50px;
@@ -78,7 +130,7 @@
     .sidebar li {
         display: block;
         padding: 10px;
-    }
+    } 
 
     .sidebar a {
         color: #555;
@@ -91,24 +143,24 @@
     .sidebar.close {
         animation: slideOut 0.3s ease-in;
     }
+ */
+ 
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%)
+        }
+        to {
+            transform: translateX(0%)
+        }
+    } 
 
 
     @keyframes slideOut {
         from {
-            transform: translateX(100%)
-        }
-        to {
-            transform: translateX(-100%)
-        }
-    }
-
-    @keyframes slideIn {
-        from {
-            transform: translateX(-100%)
-        }
+            transform: translateX(0%)
+        } 
         to {
             transform: translateX(100%)
         }
     }
-}
-
+} 
