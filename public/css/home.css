@@ -34,21 +34,25 @@
     margin: 0 5px;
 }
 
+.button {
+    border-radius: 5px; /* Adjust the border radius as needed */
+    background-color: #fff;;
+    color: #000;
+    border: 2px solid #000;
+}
+
 #login {
-    border-radius: 10px; /* Adjust the border radius as needed */
-    color: #fff;
-    border: 1px solid #000;
     padding: 10px 40px;
 }
 
 .navbar a {
     text-decoration: none;
-    color: #555;
+    color: #000;
     transition: all 0.3s ease 0s;
 }
 
-.navbar a:hover {
-    color: #b2dfdb;
+.navbar a:hover, .button:hover {
+    color: #fd1150;
 }
 
 .sidebar {
@@ -81,6 +85,15 @@
 .sidebar a {
     color: #555;
     text-decoration: none;
+}
+
+.sidebar a:hover{
+    color: #fd1150;
+}
+
+#login2 {
+    padding: 10px 40px;
+    margin: 20px;
 }
 
 .sidebar {
@@ -117,33 +130,6 @@
         display: block;
         transform: translateX(100%);
     }
-/*
-    .sidebar nav {
-        text-align: center;
-        margin-top: 50px;
-    }
-
-    .sidebar ul {
-        padding: 0;
-    }
-
-    .sidebar li {
-        display: block;
-        padding: 10px;
-    } 
-
-    .sidebar a {
-        color: #555;
-        text-decoration: none;
-    }
-    .sidebar.open {
-        animation: slideIn 0.3s ease-out;
-    }
-
-    .sidebar.close {
-        animation: slideOut 0.3s ease-in;
-    }
- */
  
     @keyframes slideIn {
         from {
@@ -163,4 +149,40 @@
             transform: translateX(100%)
         }
     }
+
+    .view1 h1 {
+        width: 85%;
+    }
+
+    .view1 button {
+        width: 95%;
+    }
 } 
+
+.view1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    text-align: center;
+    background: url('../images/anique-statue.png') center/cover no-repeat;
+    position: relative;
+}
+
+.view1 h1 {
+    margin-top: 250px;
+    width: 85%;
+    font-size: 32px;
+    color: #ffff;
+}
+
+.view1 button {
+    margin-top: auto;
+    margin-bottom: 100px;
+    padding: 10px;
+    min-width: 300px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #000;
+}

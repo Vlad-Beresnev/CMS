@@ -7,11 +7,24 @@ const path = require('path')
 const app = http.createServer((req, res) => {
     const url = req.url || ''
 
-    const serveStaticFile = (filePath, contentType) => {
-        const fileContent = fs.readFileSync(filePath, 'utf-8');
-        res.writeHead(200, { 'Content-Type': contentType });
+    const serveStaticFile = (filePath) => {
+        const fileContent = fs.readFileSync(filePath);
+        const fileExtension = path.extname(filePath).toLowerCase();
+    
+        const contentTypes = {
+            '.html': 'text/html',
+            '.css': 'text/css',
+            '.js': 'application/javascript',
+            '.png': 'image/png',
+            '.jpg': 'image/jpeg',
+            // Add more content types as needed
+        };
+    
+        const selectedContentType = contentTypes[fileExtension] || 'application/octet-stream';
+    
+        res.writeHead(200, { 'Content-Type': selectedContentType });
         res.end(fileContent);
-    }
+    };
 
 
     if (url.startsWith('/auth')) {
@@ -20,13 +33,16 @@ const app = http.createServer((req, res) => {
         contentRoutes(req, res);
     } else if (url.startsWith('/home') || url === '/') {
         const homePagePath = path.join(__dirname, 'views', 'home.html');
-        serveStaticFile(homePagePath, 'text/html');
+        serveStaticFile(homePagePath);
     } else if (url.startsWith('/css')) {
         const cssFilePath = path.join(__dirname, 'public', 'css', url.substring(5));
-        serveStaticFile(cssFilePath, 'text/css');
+        serveStaticFile(cssFilePath);
     } else if (url.startsWith('/js')) {
         const jsFilePath = path.join(__dirname, 'public', 'js', url.substring(4));
-        serveStaticFile(jsFilePath, 'application/javascript');
+        serveStaticFile(jsFilePath);
+    } else if (url.startsWith('/images')) {
+        const imagePath = path.join(__dirname, 'public', 'images', url.substring(7));
+        serveStaticFile(imagePath);
     }
     else {
         res.writeHead(404, { 'Content-Type': 'text/plain'});
