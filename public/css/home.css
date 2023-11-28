@@ -177,6 +177,10 @@
     color: #ffff;
 }
 
+.view1 h1:hover + #greetEdit {
+    display: inline;
+}
+
 .view1 button {
     margin-top: auto;
     margin-bottom: 100px;
@@ -186,3 +190,17 @@
     color: #fff;
     background-color: #000;
 }
+
+#greetEdit {
+    display: none;
+    margin-top: -22px;
+    cursor: pointer;
+    margin-left: 200px;
+}
+
+
+
+#greetEdit:hover {
+    display: inline;
+}
+
