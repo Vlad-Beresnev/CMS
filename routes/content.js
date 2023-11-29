@@ -161,6 +161,24 @@ const deletePage = async (pageId) => {
     }
 };
 
+const serveStaticFile = (filePath) => {
+    const fileContent = fs.readFileSync(filePath);
+    const fileExtension = path.extname(filePath).toLowerCase();
+
+    const contentTypes = {
+        '.html': 'text/html',
+        '.css': 'text/css',
+        '.js': 'application/javascript',
+        '.png': 'image/png',
+        '.jpg': 'image/jpeg',
+        // Add more content types as needed
+    };
+
+    const selectedContentType = contentTypes[fileExtension] || 'application/octet-stream';
+
+    res.writeHead(200, { 'Content-Type': selectedContentType });
+    res.end(fileContent);
+};
 
 const contentRoutes = async (req, res) => {
     const url = req.url || ''
@@ -176,6 +194,15 @@ const contentRoutes = async (req, res) => {
         else {
             res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET, POST' })
             res.end('Method Not Allowed')
+        }
+    } else if (url === '/home' || url === '/') {
+        if (req.method === 'GET') {
+            const homePagePath = path.join(__dirname, 'views', 'home.html');
+            serveStaticFile(homePagePath, res);
+        } else {
+            // Handle other methods if needed
+            res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
+            res.end('Method Not Allowed');
         }
     }
     else if (url=== '/content/edit') {
@@ -358,7 +385,7 @@ const contentRoutes = async (req, res) => {
     } else if (userSession.role !== 'admin') {
         res.writeHead(403, { 'Content-Type': 'text/plain' });
         res.end('Forbidden: Only admin users can access this route');
-    }
+    } 
     else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.write('Not Found')

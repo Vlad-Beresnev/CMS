@@ -4,6 +4,7 @@ const contentRoutes = require('./routes/content')
 const fs = require('fs')
 const path = require('path')
 
+
 const app = http.createServer((req, res) => {
     const url = req.url || ''
 
@@ -25,7 +26,6 @@ const app = http.createServer((req, res) => {
         res.writeHead(200, { 'Content-Type': selectedContentType });
         res.end(fileContent);
     };
-
 
     if (url.startsWith('/auth')) {
         authRoutes(req, res);

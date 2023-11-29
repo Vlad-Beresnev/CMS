@@ -152,6 +152,13 @@
 
     .view1 h1 {
         width: 85%;
+        margin-bottom: 80px;
+        padding-bottom: 20px;
+    }
+
+    #greetEdit{
+        position: absolute;
+        margin-bottom: -200px;
     }
 
     .view1 button {
@@ -172,13 +179,14 @@
 
 .view1 h1 {
     margin-top: 250px;
+    padding-bottom: 40px;
     width: 85%;
     font-size: 32px;
     color: #ffff;
 }
 
 .view1 h1:hover + #greetEdit {
-    display: inline;
+    display: block;
 }
 
 .view1 button {
@@ -193,9 +201,9 @@
 
 #greetEdit {
     display: none;
-    margin-top: -22px;
+    transform: translate(-50%, -50%);
     cursor: pointer;
-    margin-left: 200px;
+    margin-top: -30px;
 }
 
 
