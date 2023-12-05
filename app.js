@@ -6,18 +6,59 @@ const urlModule = require('url')
 const path = require('path')
 
 
-const app = http.createServer((req, res) => {
-    const url = req.url || ''
+const serveStaticFile = (req, res, filePath, contentType) => {
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Internal Server Error');
+            return;
+        } else {
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(data);
+        }
+    })
+}
 
-    if (url.startsWith('/auth')) {
-        authRoutes(req, res);
-    } else if (url.startsWith('/intranet')) {
-        contentRoutes(req, res);
-    } 
-    else {
-        res.writeHead(404, { 'Content-Type': 'text/plain'});
-        res.end('Not Found')
+const handleStaticFiles = (req, res, next) => {
+    const url = req.url || '';
+    
+    if (url.startsWith('/home') || url === '/') {
+        const homePagePath = path.join(__dirname, 'views', 'home.html');
+        serveStaticFile(req, res, homePagePath, 'text/html');
+        const userSession = require('./routes/auth')
+        console.log(`This is the user's info : ${userSession.role}`)
+    } else if (url.startsWith('/css')) {
+        const cssFilePath = path.join(__dirname, 'public', 'css', url.substring(5));
+        serveStaticFile(req, res, cssFilePath, 'text/css');
+    } else if (url.startsWith('/js')) {
+        const jsFilePath = path.join(__dirname, 'public', 'js', url.substring(4));
+        serveStaticFile(req, res, jsFilePath, 'application/javascript');
+    } else if (url.startsWith('/images')) {
+        const imagePath = path.join(__dirname, 'public', 'images', url.substring(7));
+        serveStaticFile(req, res, imagePath, 'image/png');
+    } else {
+        next();
     }
+};
+
+
+const app = http.createServer((req, res) => {
+    handleStaticFiles(req, res, () => {
+        const url = req.url || ''
+    
+        if (url.startsWith('/auth')) {
+            authRoutes(req, res);
+        } else if (url.startsWith('/intranet')) {
+            contentRoutes(req, res);
+        } /*else if (url === '/home' || url === '/') {
+            contentRoutes(req, res)
+        }*/
+        else {
+            res.writeHead(404, { 'Content-Type': 'text/plain'});
+            res.end('Not Found')
+        }
+
+    })
 
 })
 

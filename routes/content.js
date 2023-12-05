@@ -163,34 +163,6 @@ const deletePage = async (pageId) => {
 };
 
 
-const serveStaticFile = (filePath, res) => {
-    fs.readFile(filePath, (err, fileContent) => {
-        if (err) {
-            console.error(`Error reading file: ${err}`);
-            res.writeHead(500, { 'Content-Type': 'text/plain' });
-            res.end('Internal Server Error');
-            return;
-        }
-
-        const fileExtension = path.extname(filePath).toLowerCase();
-
-        const contentTypes = {
-            '.html': 'text/html',
-            '.css': 'text/css',
-            '.js': 'application/javascript',
-            '.png': 'image/png',
-            '.jpg': 'image/jpeg',
-            // Add more content types as needed
-        };
-
-        const selectedContentType = contentTypes[fileExtension] || 'application/octet-stream';
-
-        res.writeHead(200, { 'Content-Type': fileExtension === '.css' ? 'text/css' : selectedContentType });
-        res.end(fileContent);
-
-    })
-}
-
 const contentRoutes = async (req, res) => {
     const url = req.url || ''
     if (url === '/home' || url === '/') {
@@ -204,22 +176,22 @@ const contentRoutes = async (req, res) => {
                     res.end(data)
                 }
             })
-        } else if (req.method === 'PUT') {
-            const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
-            const logOutPage = database.pages.find(page => page.id === "1");
-            if (logOutPage) {
-                res.writeHead(200, { 'Content-Type': 'text/plain', 'Allow': 'PUT' });
-                res.end(`This is Logout Page : ${logOutPage.page_name}`)
+            } else if (req.method === 'PUT') {
+                const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
+                const logOutPage = database.pages.find(page => page.id === "1");
+                if (logOutPage) {
+                    res.writeHead(200, { 'Content-Type': 'text/plain', 'Allow': 'PUT' });
+                    res.end(`This is Logout Page : ${logOutPage.page_name}`)
+                } else {
+                    res.writeHead(404, { 'Content-Type': 'text/plain' });
+                    res.end('Page Not Found')
+                }
             } else {
-                res.writeHead(404, { 'Content-Type': 'text/plain' });
-                res.end('Page Not Found')
+                res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
+                res.end('Method Not Allowed');
             }
-        } else {
-            res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
-            res.end('Method Not Allowed');
         }
-    }
-    else if (url=== '/content/edit') {
+        else if (url=== '/content/edit') {
         if (req.method === 'GET') {
             res.writeHead(200, { 'Content-Type': 'text/plain' });
             res.end('View Edit Content Form');
