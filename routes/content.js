@@ -1,6 +1,7 @@
 const fs = require('fs')
 const urlModule = require('url')
 const { userSession } = require('../routes/auth')
+const path = require('path')
 
 
 const existingPage = (page_name) => {
@@ -161,24 +162,34 @@ const deletePage = async (pageId) => {
     }
 };
 
-const serveStaticFile = (filePath) => {
-    const fileContent = fs.readFileSync(filePath);
-    const fileExtension = path.extname(filePath).toLowerCase();
 
-    const contentTypes = {
-        '.html': 'text/html',
-        '.css': 'text/css',
-        '.js': 'application/javascript',
-        '.png': 'image/png',
-        '.jpg': 'image/jpeg',
-        // Add more content types as needed
-    };
+const serveStaticFile = (filePath, res) => {
+    fs.readFile(filePath, (err, fileContent) => {
+        if (err) {
+            console.error(`Error reading file: ${err}`);
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Internal Server Error');
+            return;
+        }
 
-    const selectedContentType = contentTypes[fileExtension] || 'application/octet-stream';
+        const fileExtension = path.extname(filePath).toLowerCase();
 
-    res.writeHead(200, { 'Content-Type': selectedContentType });
-    res.end(fileContent);
-};
+        const contentTypes = {
+            '.html': 'text/html',
+            '.css': 'text/css',
+            '.js': 'application/javascript',
+            '.png': 'image/png',
+            '.jpg': 'image/jpeg',
+            // Add more content types as needed
+        };
+
+        const selectedContentType = contentTypes[fileExtension] || 'application/octet-stream';
+
+        res.writeHead(200, { 'Content-Type': fileExtension === '.css' ? 'text/css' : selectedContentType });
+        res.end(fileContent);
+
+    })
+}
 
 const contentRoutes = async (req, res) => {
     const url = req.url || ''
@@ -197,10 +208,20 @@ const contentRoutes = async (req, res) => {
         }
     } else if (url === '/home' || url === '/') {
         if (req.method === 'GET') {
-            const homePagePath = path.join(__dirname, 'views', 'home.html');
-            serveStaticFile(homePagePath, res);
+            
+            
+            
+        } else if (req.method === 'PUT') {
+            const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
+            const logOutPage = database.pages.find(page => page.id === "1");
+            if (logOutPage) {
+                res.writeHead(200, { 'Content-Type': 'text/plain', 'Allow': 'PUT' });
+                res.end(`This is Logout Page : ${logOutPage.page_name}`)
+            } else {
+                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.end('Page Not Found')
+            }
         } else {
-            // Handle other methods if needed
             res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
             res.end('Method Not Allowed');
         }
