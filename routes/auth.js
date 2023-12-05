@@ -136,7 +136,7 @@ const authRoutes = (req, res) => {
                     userSession["username"] = user.username
                     userSession["password"] = user.password
                     userSession["role"] = user.role
-                
+
                     res.writeHead(200, { 'Contente-Type': 'application/json'})
                     res.end(`Welcome ${userSession.username}`)
                     console.log(userSession)
@@ -249,5 +249,5 @@ const authRoutes = (req, res) => {
 
 module.exports = {
     authRoutes,
-    userSession
+    userSession,
 }

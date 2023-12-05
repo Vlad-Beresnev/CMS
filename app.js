@@ -1,5 +1,5 @@
 const http = require('http')
-const { authRoutes } = require('./routes/auth')
+const { authRoutes, userSession } = require('./routes/auth')
 const contentRoutes = require('./routes/content')
 const fs = require('fs')
 const urlModule = require('url')
@@ -21,12 +21,13 @@ const serveStaticFile = (req, res, filePath, contentType) => {
 
 const handleStaticFiles = (req, res, next) => {
     const url = req.url || '';
-    
-    if (url.startsWith('/home') || url === '/') {
+
+    // LOG OUT PAGE
+    if ((url.startsWith('/home') || url === '/') && userSession.role === 'admin') {
         const homePagePath = path.join(__dirname, 'views', 'home.html');
         serveStaticFile(req, res, homePagePath, 'text/html');
-        const userSession = require('./routes/auth')
-        console.log(`This is the user's info : ${userSession.role}`)
+        console.log(`This is the user's info : ${userSession['role']}`)
+
     } else if (url.startsWith('/css')) {
         const cssFilePath = path.join(__dirname, 'public', 'css', url.substring(5));
         serveStaticFile(req, res, cssFilePath, 'text/css');
@@ -36,9 +37,12 @@ const handleStaticFiles = (req, res, next) => {
     } else if (url.startsWith('/images')) {
         const imagePath = path.join(__dirname, 'public', 'images', url.substring(7));
         serveStaticFile(req, res, imagePath, 'image/png');
+    // NEXT PAGE
+    
+    
     } else {
         next();
-    }
+    }   
 };
 
 
@@ -50,9 +54,11 @@ const app = http.createServer((req, res) => {
             authRoutes(req, res);
         } else if (url.startsWith('/intranet')) {
             contentRoutes(req, res);
-        } /*else if (url === '/home' || url === '/') {
-            contentRoutes(req, res)
-        }*/
+        }
+        else if (userSession.role !== 'admin') {
+            res.writeHead(403, { 'Content-Type': 'text/plain' });
+            res.end('Forbidden: Only admin users can access this route');
+        }
         else {
             res.writeHead(404, { 'Content-Type': 'text/plain'});
             res.end('Not Found')
