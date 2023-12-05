@@ -193,24 +193,17 @@ const serveStaticFile = (filePath, res) => {
 
 const contentRoutes = async (req, res) => {
     const url = req.url || ''
-    if (url=== '/content/add') {
+    if (url === '/home' || url === '/') {
         if (req.method === 'GET') {
-            res.writeHead(200, { 'Content-Type': 'text/plain' })
-            res.end('View Add Content Form')
-        }
-        else if (req.method === 'POST') {
-            res.writeHead(200, { 'Content-Type': 'text/plain' })
-            res.end('Add Content')
-        }
-        else {
-            res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET, POST' })
-            res.end('Method Not Allowed')
-        }
-    } else if (url === '/home' || url === '/') {
-        if (req.method === 'GET') {
-            
-            
-            
+            fs.readFile('./views/home.html', 'utf-8', (err, data) => {
+                if (err) {
+                    res.writeHead(500, { 'Content-type': 'text/plain' })
+                    res.end('Internal Server Error')
+                } else {
+                    res.writeHead(200, { 'Content-Type': 'text/html' })
+                    res.end(data)
+                }
+            })
         } else if (req.method === 'PUT') {
             const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
             const logOutPage = database.pages.find(page => page.id === "1");
