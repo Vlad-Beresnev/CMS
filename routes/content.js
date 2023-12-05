@@ -166,7 +166,8 @@ const deletePage = async (pageId) => {
 const contentRoutes = async (req, res) => {
     const url = req.url || ''
     if (url === '/home' || url === '/') {
-        if (req.method === 'GET') {
+        console.log('ALALALALLALA')
+        /*if (req.method === 'GET') {
             fs.readFile('./views/home.html', 'utf-8', (err, data) => {
                 if (err) {
                     res.writeHead(500, { 'Content-type': 'text/plain' })
@@ -205,7 +206,7 @@ const contentRoutes = async (req, res) => {
         } else {
             res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET, POST' });
             res.end('Method Not Allowed');
-        }
+        }*/
     // INTRANET PAGE
     } else if (url === '/intranet') {
         if (req.method === 'GET') {
