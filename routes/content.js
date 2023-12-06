@@ -162,6 +162,47 @@ const deletePage = async (pageId) => {
     }
 };
 
+const serveStaticFile = (req, res, filePath, contentType) => {
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            console.error(`Error reading file ${filePath}: ${err.message}`)
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Internal Server Error');
+            return;
+        } else {
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(data);
+        }
+    })
+}
+
+const handleStaticFiles = (req, res, next) => {
+    const url = req.url || '';
+
+    if (url.startsWith('/css')) {
+        const cssFilePath = path.join('public', 'css', url.substring(5));
+        serveStaticFile(req, res, cssFilePath, 'text/css');
+    } else if (url.startsWith('/js')) {
+        const jsFilePath = path.join('public', 'js', url.substring(4));
+        serveStaticFile(req, res, jsFilePath, 'application/javascript');
+    } else if (url.startsWith('/images')) {
+        const imagePath = path.join('public', 'images', url.substring(7));
+        serveStaticFile(req, res, imagePath, 'image/png');
+    } 
+    // LOG OUT PAGE
+    else if ((url.startsWith('/home') || url === '/') && userSession.role === 'admin') {
+        if (req.method === 'GET') {
+            const homePagePath = path.join( 'views', 'home.html');
+            serveStaticFile(req, res, homePagePath, 'text/html');
+            console.log(`This is the user's info : ${userSession['role']}`)
+        }
+    } 
+    // NEXT PAGE
+    else {
+        next();
+    }   
+};
+
 
 const contentRoutes = async (req, res) => {
     const url = req.url || ''
@@ -380,4 +421,8 @@ const contentRoutes = async (req, res) => {
     }
 }
 
-module.exports = contentRoutes
+module.exports = {
+    contentRoutes,
+    handleStaticFiles
+    
+}
