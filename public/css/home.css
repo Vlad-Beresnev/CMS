@@ -158,7 +158,21 @@
 
     #greetEdit{
         position: absolute;
-        margin-bottom: -200px;
+        margin-bottom: -100px;
+    }
+
+    #greetFinish {
+        position: absolute;
+        margin-bottom: -54px;
+        margin-right: 16px;
+    }
+
+    #greetingInput {
+        position: absolute;
+        margin-bottom: 20px;
+        width: 300px;
+        height: 32px;
+
     }
 
     .view1 button {
