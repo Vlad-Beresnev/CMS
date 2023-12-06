@@ -54,6 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
     greetEdit.addEventListener('click', () => {
         greetingInput.style.display = 'inline'
         greetFinish.style.display = 'inline'
+
+        greetingInput.focus()
         
         // Send a PUT request to update the greeting text
     greetFinish.addEventListener('click', () => {
@@ -101,6 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error(error));
             location.reload();
             }
+    })
+
+    greetingInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            greetFinish.click()
+        }
     })
 
 });
