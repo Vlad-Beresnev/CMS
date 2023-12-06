@@ -16,3 +16,4 @@ function toggleSidebar() {
         menuIcon.classList.add('fa-bars');
     }
 }
+

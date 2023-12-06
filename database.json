@@ -17,11 +17,13 @@
       "url": "logout",
       "author": "vlad",
       "page_name": "Logout Page",
-      "page_heading": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a pretium ex.",
+      "page_heading": "Bye",
       "background_image": "example-background-image-url.png",
       "address": "peter@gmail.com",
       "phone": "New Phone Number",
-      "email": "new.email@example.com"
+      "email": "new.email@example.com",
+      "modified_at": "2023-12-06T09:14:25.382Z",
+      "newGreetingText": ""
     },
     {
       "id": "2",
@@ -52,6 +54,5 @@
       "email": "example@gmail.com",
       "created_at": "2023-11-22T09:53:36.329Z"
     }
-    
   ]
 }

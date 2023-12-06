@@ -2,6 +2,7 @@ const fs = require('fs')
 const urlModule = require('url')
 const { userSession } = require('../routes/auth')
 const path = require('path')
+const { time } = require('console')
 
 
 const existingPage = (page_name) => {
@@ -115,6 +116,30 @@ const patchPage = (pageId, updatedData) => {
     return newVersion;
 } 
 
+const putPage = (pageId, newData) => {
+    const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
+    const pageIndex = database.pages.findIndex((page) => page.id === pageId)
+
+    if (pageIndex === -1) {
+        return null
+    }
+    
+    const originalPage = database.pages[pageIndex]
+    const timestamp = new Date().toISOString()
+
+    originalPage.modified_at = timestamp;
+
+    // Update the existing page with the new data
+    database.pages[pageIndex] = {
+        ...originalPage,
+        ...newData,
+    };
+
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2))
+
+    return originalPage
+}
+
 const deletePage = async (pageId) => {
     try {
         const database = JSON.parse(await fs.promises.readFile('database.json', 'utf-8'));
@@ -190,11 +215,38 @@ const handleStaticFiles = (req, res, next) => {
         serveStaticFile(req, res, imagePath, 'image/png');
     } 
     // LOG OUT PAGE
-    else if ((url.startsWith('/home') || url === '/') && userSession.role === 'admin') {
+    else if ((url.startsWith('/home') || url === '/')) {
         if (req.method === 'GET') {
             const homePagePath = path.join( 'views', 'home.html');
             serveStaticFile(req, res, homePagePath, 'text/html');
             console.log(`This is the user's info : ${userSession['role']}`)
+        } else if (req.method === 'PUT') {
+            let data = '';
+
+            req.on('data', (chunk) => {
+                data += chunk
+            })
+
+            req.on('end', () => {
+                try {
+                    const updatedData = JSON.parse(data)
+                    const updatedPage = putPage('1', updatedData)
+                    if (updatedPage) {
+                        res.writeHead(200, { 'Content-Type': 'text/plain', 'Allow': 'PUT' });
+                        res.end(`This is New Greeting Text : ${updatedPage.page_heading}`)
+                    } else {
+                        res.writeHead(404, { 'Content-Type': 'text/plain' });
+                        res.end('Page Not Found')
+                    }
+                } catch(error) {
+                    console.error('Error parsing request body:', error);
+                    res.writeHead(400, { 'Content-Type': 'text/plain' });
+                    res.end('Bad Request');
+                }
+            })
+        } else {
+            res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
+            res.end('Method Not Allowed');
         }
     } 
     // NEXT PAGE
