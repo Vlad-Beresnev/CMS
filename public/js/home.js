@@ -16,4 +16,11 @@ function toggleSidebar() {
         menuIcon.classList.add('fa-bars');
     }
 }
+const greetingElement = document.getElementById('greetingText')
+document.addEventListener('DOMContentLoaded', () => {
+    const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
+    const logOutPage = database.pages.find((page) => page.id === '1')
+    const greetingText = logOutPage.page_heading
+    greetingElement.textContent = greetingText
 
+})

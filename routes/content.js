@@ -187,7 +187,30 @@ const deletePage = async (pageId) => {
     }
 };
 
-const serveStaticFile = (req, res, filePath, contentType) => {
+const getPageHeading = () => {
+    const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
+    const logOutPage = database.pages.find((page) => page.id === '1');
+    return logOutPage.page_heading
+}
+
+const serveStaticFileWithHeading = (req, res, filePath, contentType) => {
+    fs.readFile(filePath, 'utf-8', (err, content) => {
+        if (err) {
+            res.writeHead(500);
+            res.end('Internal Server Error');
+        } else {
+            const greetingText = getPageHeading();
+
+            // Inject the dynamic content into the HTML
+            const modifiedContent = content.replace('<h1 id="greetingText"></h1>', `<h1>${greetingText}</h1>`);
+
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(modifiedContent);
+        }
+    });
+};
+
+function serveStaticFile (req, res, filePath, contentType) {
     fs.readFile(filePath, (err, data) => {
         if (err) {
             console.error(`Error reading file ${filePath}: ${err.message}`)
@@ -218,8 +241,7 @@ const handleStaticFiles = (req, res, next) => {
     else if ((url.startsWith('/home') || url === '/')) {
         if (req.method === 'GET') {
             const homePagePath = path.join( 'views', 'home.html');
-            serveStaticFile(req, res, homePagePath, 'text/html');
-            console.log(`This is the user's info : ${userSession['role']}`)
+            serveStaticFileWithHeading(req, res, homePagePath, 'text/html');
         } else if (req.method === 'PUT') {
             let data = '';
 
