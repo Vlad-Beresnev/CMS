@@ -61,8 +61,12 @@ const updateUrl = (pageName) => {
     formattedUrl = formattedUrl.replace(/[^\w-]/g, '')
 
     return formattedUrl
-
 }
+
+const updatePageUrl = (database, pageIndex) => {
+    const originalPage = database.pages[pageIndex];
+    originalPage.url = updateUrl(originalPage.page_name);
+};
 
 const patchPage = (pageId, updatedData) => {
     const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
@@ -76,6 +80,8 @@ const patchPage = (pageId, updatedData) => {
 
     const timestamp = new Date().toISOString()
     
+    originalPage.url = updateUrl(originalPage.page_name)
+
     originalPage.modified_at = timestamp
 
     //ID Number
@@ -100,18 +106,20 @@ const patchPage = (pageId, updatedData) => {
         modified_at: timestamp,
     };
 
-    originalPage.url = updateUrl(originalPage.page_name)
-
+    
     // Update the existing page with the new data
     database.pages[pageIndex] = {
         ...originalPage,
         ...updatedData,
     };
 
+
     database.pages.push(newVersion);
 
     // Save the updated database to the file
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+
+    updatePageUrl(database, pageIndex);
 
     return newVersion;
 } 
