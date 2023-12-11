@@ -17,12 +17,12 @@
       "url": "logout",
       "author": "vlad",
       "page_name": "Logout Page",
-      "page_heading": "dfsajlöknaösdfjnsaökdjfnasdökjfnsdkfjsan",
+      "page_heading": "LOVE LOVE LOVE",
       "background_image": "example-background-image-url.png",
       "address": "peter@gmail.com",
       "phone": "New Phone Number",
       "email": "new.email@example.com",
-      "modified_at": "2023-12-08T09:36:43.521Z"
+      "modified_at": "2023-12-11T11:56:00.727Z"
     },
     {
       "id": "2",
@@ -368,6 +368,20 @@
       "email": "new.email@example.com",
       "created_at": "2023-11-22T09:53:36.329Z",
       "modified_at": "2023-12-08T09:32:18.519Z"
+    },
+    {
+      "id": "4",
+      "url": "upyter",
+      "author": "admin",
+      "page_name": "Upyter",
+      "page_heading": "Secret of Universe.",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a pretium ex. Fusce rhoncus lacus eget diam varius, vitae congue elit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nNunc eget diam et eros iaculis ornare. Nunc diam dui, venenatis eu tellus et, fermentum dictum felis. Sed semper lectus id facilisis viverra. Phasellus sit amet magna id lectus cursus vulputate. Quisque augue leo, ornare eu mattis quis, dignissim a erat.\n\nOrci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc eget diam et eros iaculis ornare. Nunc diam dui, venenatis eu tellus et, fermentum dictum felis.",
+      "image": "./public/images/universe.png",
+      "background_image": "./public/background/black-hole.png",
+      "address": "Helsinginkatu 25",
+      "phone": "0403620904",
+      "email": "beresnev.explorer@gmail.com",
+      "created_at": "2023-12-08T13:14:15.927Z"
     }
   ]
 }
