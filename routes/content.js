@@ -220,6 +220,15 @@ const handleStaticFiles = (req, res, next) => {
         serveStaticFile(req, res, imagePath, 'image/png');
     } 
     // LOG OUT PAGE
+    else if (url.startsWith('/home/esimerkkisivu')) {
+        if (req.method === 'GET') {
+            const esimerkkisivuPath = path.join( 'views', 'esimerkkisivu.html');
+            serveStaticFileWithHeading(req, res, esimerkkisivuPath, 'text/html');
+        } else {
+            res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
+            res.end('Method Not Allowed');
+        }
+    }
     else if ((url.startsWith('/home') || url === '/')) {
         if (req.method === 'GET') {
             const homePagePath = path.join( 'views', 'home.html');
