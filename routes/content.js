@@ -53,6 +53,7 @@ const creatingPage = (pageData) => {
 }
 
 const updateUrl = (pageName) => {
+
     // Make it lowercase
     let formattedUrl = pageName.toLowerCase()
     // Replace spaces with dashes
@@ -63,64 +64,37 @@ const updateUrl = (pageName) => {
     return formattedUrl
 }
 
-const updatePageUrl = (database, pageIndex) => {
-    const originalPage = database.pages[pageIndex];
-    originalPage.url = updateUrl(originalPage.page_name);
-};
-
 const patchPage = (pageId, updatedData) => {
+    
     const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
-
     const pageIndex = database.pages.findIndex((page) => page.id === pageId)
 
     if (pageIndex === -1) {
         return null
     }
+
     const originalPage = database.pages[pageIndex]
-
     const timestamp = new Date().toISOString()
-    
-    originalPage.url = updateUrl(originalPage.page_name)
-
-    originalPage.modified_at = timestamp
-
-    //ID Number
-    const maxId = Math.min(...database.pages.map((page) => page.id), 0)
-    const newId = (maxId - 1).toString()
-
-    //const newVersionId = '-' + originalPage.id
-    
-    const newVersion = {
-        id: newId,
-        url: updateUrl(originalPage.page_name),
-        author: originalPage.author,
-        page_name: originalPage.page_name,
-        page_heading: originalPage.page_heading,
-        text: originalPage.text,
-        image: originalPage.image,
-        background_image: originalPage.background_image,
-        address: originalPage.address,
-        phone: originalPage.phone,
-        email: originalPage.email,
-        created_at: originalPage.created_at,
-        modified_at: timestamp,
-    };
-
     
     // Update the existing page with the new data
     database.pages[pageIndex] = {
         ...originalPage,
         ...updatedData,
+        modified_at: timestamp,
+        url: updatedData.page_name ? updateUrl(updatedData.page_name) : originalPage.url
     };
 
+    //ID Number
+    const maxId = Math.min(...database.pages.map((page) => page.id), 0)
+    const newId = (maxId - 1).toString()
+    
+    const newVersion = {
+        ...database.pages[pageIndex],
+        id: newId
+    };
 
     database.pages.push(newVersion);
-
-    // Save the updated database to the file
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-
-    updatePageUrl(database, pageIndex);
-
     return newVersion;
 } 
 
