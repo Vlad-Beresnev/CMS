@@ -1,3 +1,35 @@
-h1 {
-    color: #256;
+.esim-view1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    gap: 20px;
+}
+
+.esim-view1 h1 {
+    font-size: 56px;
+}
+
+.esim-view1 img {
+    margin-top: 20px;
+}
+
+.esim-view1 p {
+    font-size: 16px;
+    line-height: 1.4;
+    max-width: 1025px;
+}
+
+.line-text {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.esim-view1 p, .esim-view1 h2 {
+    margin: 5px;
 }
