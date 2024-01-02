@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
-
 document.addEventListener('DOMContentLoaded', () => {
     const greetingElement = document.getElementById('greetingText');
     const greetEdit = document.getElementById('greetEdit');
@@ -47,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (logOutPage) {
                 updateGreetingText(logOutPage.page_heading);
             }
-        })
+        })     
         .catch(error => console.error(error));
 
 
