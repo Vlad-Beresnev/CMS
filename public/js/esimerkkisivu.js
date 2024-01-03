@@ -1,3 +1,5 @@
+
+
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar')
     const menuIcon = document.querySelector('.menu-icon i')
@@ -17,103 +19,87 @@ function toggleSidebar() {
     }
 }
 
+
 document.addEventListener('DOMContentLoaded', () => {
-    
     const pageOpenElement = document.getElementById('esim-h1-open');
     const pageNameElement = document.getElementById('esim-h1');
     const pageFinishElement = document.getElementById('esim-h1-finish');
     const pageInputElement = document.getElementById('esim-h1-input');
-
-const updatePageNameElement = (newName) => {
-    pageNameElement.textContent = newName;
-}
-
-fetch('database.json')
-.then(response => response.json())
-.then(data => {
-    const esimerkkisivu = data.pages.find((page) => page['id'] === '2');
-    if (esimerkkisivu) {
-        updatePageNameElement(esimerkkisivu.page_name)
+    
+    const updatePageNameElement = (newName) => {
+        pageNameElement.textContent = newName;
     }
-})
-.catch(error => console.error(error))
-
-
-
-pageOpenElement.addEventListener('click', () => {
-    pageFinishElement.style.display = 'inline';
-    pageInputElement.style.display = 'inline';
-    pageOpenElement.style.display = 'none';
-
-    pageInputElement.focus()
-})
     
-pageFinishElement.addEventListener('click', () => {
-    const newNameElement = pageInputElement.value;
-
-    fetch('/home/esimerkkisivu', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ page_name: newNameElement }),
-    })
+    fetch('/database.json')
     .then(response => response.json())
-    .then(updatedPage => {
-        updatePageNameElement(updatedPage.page_name);
+    .then(data => {
+        const esimerkkisivu = data.pages.find((page) => page['id'] === '2');
+        if (esimerkkisivu) {
+            updatePageNameElement(esimerkkisivu.page_name);
+            pageNameElement.textContent = esimerkkisivu.page_name;
+        }
     })
     .catch(error => console.error(error));
-    location.reload();
 
-    
-    fetch('/path-for-new-page', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ page_heading: newPageInput.value }),
-    })
-    .then(response => response.json())
-    .then(updatedPage => {
-        updatePageNameElement(updatedPage.page_name);
-        // Additional actions or messages
-    })
-    .catch(error => console.error(error));
-    
-    location.reload();
-})
-});
+    pageOpenElement.addEventListener('click', () => {
+        pageFinishElement.style.display = 'inline';
+        pageInputElement.style.display = 'inline';
+        pageOpenElement.style.display = 'none';
 
-document.addEventListener('click', (event) => {
-    const isClickInsideEditIcon = pageOpenElement.contains(event.target);
-    const isClickInsideFinishIcon = pageFinishElement.contains(event.target);
-    const isClickInsideGreetingInput = pageInputElement.contains(event.target) 
-    
-    if (!isClickInsideEditIcon && !isClickInsideFinishIcon && !isClickInsideGreetingInput && pageFinishElement.display === 'inline') {
+        pageInputElement.focus();
+    });
         
-        pageFinishElement.style.display = 'none';
-        pageInputElement.style.display = 'none';
-        pageOpenElement.style.display = 'inline';
-        const newNameText = pageInputElement.value;
+    pageFinishElement.addEventListener('click', () => {
+        const newNameElement = pageInputElement.value;
 
-        fetch('home/esimerkkisivu', {
+        fetch('/home/esimerkkisivu', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ page_name: newNameText }),
+            body: JSON.stringify({ page_name: newNameElement }),
         })
         .then(response => response.json())
         .then(updatedPage => {
-            updatePageNameElement( updatedPage.page_name );
+            updatePageNameElement(updatedPage.page_name);
         })
         .catch(error => console.error(error));
         location.reload();
-    }
-})
+    });
 
-greetingInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        pageFinishElement.click()
-    }
-})
+    document.addEventListener('click', (event) => {
+        const isClickInsideEditIcon = pageOpenElement.contains(event.target);
+        const isClickInsideFinishIcon = pageFinishElement.contains(event.target);
+        const isClickInsideGreetingInput = pageInputElement.contains(event.target) 
+        const newNameElement = pageInputElement.value;
+
+
+        if (!isClickInsideEditIcon && !isClickInsideFinishIcon && !isClickInsideGreetingInput && pageFinishElement.style.display === 'inline') {
+            
+            pageFinishElement.style.display = 'none';
+            pageInputElement.style.display = 'none';
+            pageOpenElement.style.display = 'inline';  
+            
+            fetch('/home/esimerkkisivu', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': "application/json",
+                },
+                body: JSON.stringify({ page_name: newNameElement }),
+            })
+            .then(response => response.json())
+            .then(updatedPage => {
+                updatePageNameElement(updatedPage.page_name);
+                // You can perform additional actions or show messages here if needed
+            })
+            .catch(error => console.error(error));
+            location.reload();
+        }
+    });
+
+    pageInputElement.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            pageFinishElement.click()
+        }
+    });
+});

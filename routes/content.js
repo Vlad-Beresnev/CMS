@@ -175,17 +175,32 @@ const getPageHeading = () => {
     return logOutPage.page_heading
 }
 
+const dynamicElement = (filePath) => {
+    if (filePath === path.join('views', 'home.html')) {
+        return content.replace('<h1 id="greetingText"></h1>', `<h1>${greetingText}</h1>`);
+    }
+}
+
 const serveStaticFileWithHeading = (req, res, filePath, contentType) => {
+   
     fs.readFile(filePath, 'utf-8', (err, content) => {
         if (err) {
             res.writeHead(500);
             res.end('Internal Server Error');
         } else {
+            const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
+            const esimerkkisivu = database.pages.find((page) => page.id === '2');
             const greetingText = getPageHeading();
 
-            // Inject the dynamic content into the HTML
-            const modifiedContent = content.replace('<h1 id="greetingText"></h1>', `<h1>${greetingText}</h1>`);
+            const esimName = esimerkkisivu.page_name;
 
+            let modifiedContent = 0;
+            // Inject the dynamic content into the HTML
+            if (filePath === path.join('views', 'home.html')) {
+                modifiedContent = content.replace('<h1 id="greetingText"></h1>', `<h1>${greetingText}</h1>`);
+            } else if (filePath === path.join('views', 'esimerkkisivu.html')) {
+                modifiedContent = content.replace('<h1 id="esim-h1"></h1>', `<h1>${esimName}</h1>`);
+            }
             res.writeHead(200, { 'Content-Type': contentType });
             res.end(modifiedContent);
         }
@@ -220,7 +235,7 @@ const handleStaticFiles = (req, res, next) => {
         serveStaticFile(req, res, imagePath, 'image/png');
     } 
     // LOG OUT PAGE
-    else if (url.startsWith('/home/esimerkkisivu')) {
+    else if (url === '/home/esimerkkisivu') {
         if (req.method === 'GET') {
             const esimerkkisivuPath = path.join( 'views', 'esimerkkisivu.html');
             serveStaticFileWithHeading(req, res, esimerkkisivuPath, 'text/html');

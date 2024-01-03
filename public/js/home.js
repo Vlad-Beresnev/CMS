@@ -16,7 +16,7 @@ function toggleSidebar() {
         menuIcon.classList.add('fa-bars');
     }
 }
-
+/*
 document.addEventListener('DOMContentLoaded', () => {
     const greetingElement = document.getElementById('greetingText')
     const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     greetingElement.textContent = greetingText
 
 })
-
+*/
 document.addEventListener('DOMContentLoaded', () => {
     const greetingElement = document.getElementById('greetingText');
     const greetEdit = document.getElementById('greetEdit');
