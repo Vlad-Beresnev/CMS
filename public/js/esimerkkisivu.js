@@ -22,22 +22,14 @@ function toggleSidebar() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const pageOpenElement = document.getElementById('esim-h1-open');
-    const pageNameElement = document.getElementById('esim-h1');
     const pageFinishElement = document.getElementById('esim-h1-finish');
     const pageInputElement = document.getElementById('esim-h1-input');
     
-    const updatePageNameElement = (newName) => {
-        pageNameElement.textContent = newName;
-    }
-    
+    // Fetch the initial greeting text from the server
     fetch('/database.json')
     .then(response => response.json())
     .then(data => {
-        const esimerkkisivu = data.pages.find((page) => page['id'] === '2');
-        if (esimerkkisivu) {
-            updatePageNameElement(esimerkkisivu.page_name);
-            pageNameElement.textContent = esimerkkisivu.page_name;
-        }
+        
     })
     .catch(error => console.error(error));
 
@@ -45,10 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
         pageFinishElement.style.display = 'inline';
         pageInputElement.style.display = 'inline';
         pageOpenElement.style.display = 'none';
-
         pageInputElement.focus();
     });
         
+    // Send a PUT request to update the greeting text
     pageFinishElement.addEventListener('click', () => {
         const newNameElement = pageInputElement.value;
 
@@ -61,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => response.json())
         .then(updatedPage => {
-            updatePageNameElement(updatedPage.page_name);
         })
         .catch(error => console.error(error));
         location.reload();
@@ -71,14 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const isClickInsideEditIcon = pageOpenElement.contains(event.target);
         const isClickInsideFinishIcon = pageFinishElement.contains(event.target);
         const isClickInsideGreetingInput = pageInputElement.contains(event.target) 
-        const newNameElement = pageInputElement.value;
-
-
+        
+        
         if (!isClickInsideEditIcon && !isClickInsideFinishIcon && !isClickInsideGreetingInput && pageFinishElement.style.display === 'inline') {
             
             pageFinishElement.style.display = 'none';
             pageInputElement.style.display = 'none';
-            pageOpenElement.style.display = 'inline';  
+            pageOpenElement.style.display = 'inline';
+            const newNameElement = pageInputElement.value;
+              
             
             fetch('/home/esimerkkisivu', {
                 method: 'PUT',
@@ -88,9 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ page_name: newNameElement }),
             })
             .then(response => response.json())
-            .then(updatedPage => {
-                updatePageNameElement(updatedPage.page_name);
-                // You can perform additional actions or show messages here if needed
+            .then(updatedPage => {    
             })
             .catch(error => console.error(error));
             location.reload();

@@ -175,11 +175,7 @@ const getPageHeading = () => {
     return logOutPage.page_heading
 }
 
-const dynamicElement = (filePath) => {
-    if (filePath === path.join('views', 'home.html')) {
-        return content.replace('<h1 id="greetingText"></h1>', `<h1>${greetingText}</h1>`);
-    }
-}
+
 
 const serveStaticFileWithHeading = (req, res, filePath, contentType) => {
    
@@ -239,6 +235,25 @@ const handleStaticFiles = (req, res, next) => {
         if (req.method === 'GET') {
             const esimerkkisivuPath = path.join( 'views', 'esimerkkisivu.html');
             serveStaticFileWithHeading(req, res, esimerkkisivuPath, 'text/html');
+        } else if (req.method === 'PUT') {
+            let data = '';
+            req.on('data', (chunk) => {
+                data += chunk;
+            })
+            req.on('end', () => {
+                try {
+                    const updatedData = JSON.parse(data);
+                    const updatedPage = putPage('2', updatedData);
+                    if (updatedPage) {
+                        res.writeHead(200, { 'Content-Type': 'text/plain', 'Allow': 'PUT' });
+                        res.end(`This is New Greeting Text : ${updatedPage}`)
+                    }
+                } catch(error) {
+                    console.error('Error parsing request body:', error);
+                    res.writeHead(400, { 'Content-Type': 'text/plain' });
+                    res.end('Bad Request');
+                }
+            })
         } else {
             res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
             res.end('Method Not Allowed');

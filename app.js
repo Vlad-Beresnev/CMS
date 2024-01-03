@@ -20,6 +20,8 @@ const app = http.createServer((req, res) => {
             authRoutes(req, res);
         } else if (url.startsWith('/intranet')) {
             contentRoutes(req, res);
+        } else if (url.startsWith('/home')) {
+            contentRoutes(req, res);
         }
         else if (userSession.role !== 'admin') {
             res.writeHead(403, { 'Content-Type': 'text/plain' });

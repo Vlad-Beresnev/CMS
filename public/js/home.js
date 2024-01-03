@@ -16,36 +16,18 @@ function toggleSidebar() {
         menuIcon.classList.add('fa-bars');
     }
 }
-/*
-document.addEventListener('DOMContentLoaded', () => {
-    const greetingElement = document.getElementById('greetingText')
-    const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
-    const logOutPage = database.pages.find((page) => page.id === '1')
-    const greetingText = logOutPage.page_heading
-    greetingElement.textContent = greetingText
 
-})
-*/
 document.addEventListener('DOMContentLoaded', () => {
-    const greetingElement = document.getElementById('greetingText');
     const greetEdit = document.getElementById('greetEdit');
     const greetFinish = document.getElementById('greetFinish');
     const greetingInput = document.getElementById('greetingInput');
 
 
-    // Function to update greeting text on the page
-    const updateGreetingText = (newGreetingText) => {
-        greetingElement.textContent = newGreetingText;
-    };
-
     // Fetch the initial greeting text from the server
     fetch('/database.json')
         .then(response => response.json())
         .then(data => {
-            const logOutPage = data.pages.find((page) => page['id'] === '1');
-            if (logOutPage) {
-                updateGreetingText(logOutPage.page_heading);
-            }
+            
         })     
         .catch(error => console.error(error));
 
@@ -53,10 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
     greetEdit.addEventListener('click', () => {
         greetingInput.style.display = 'inline'
         greetFinish.style.display = 'inline'
-
         greetingInput.focus()
         
-        // Send a PUT request to update the greeting text
+    });
+
+    // Send a PUT request to update the greeting text
     greetFinish.addEventListener('click', () => {
         const newGreetingText = greetingInput.value;
         
@@ -69,13 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => response.json())
         .then(updatedPage => {
-            updateGreetingText(updatedPage.page_heading);
-            // You can perform additional actions or show messages here if needed
         })
         .catch(error => console.error(error));
         location.reload();
     })
-    });
 
     document.addEventListener('click', (event) => {
         const isClickInsideEditIcon = greetEdit.contains(event.target);
@@ -96,13 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(response => response.json())
             .then(updatedPage => {
-                updateGreetingText(updatedPage.page_heading);
-                // You can perform additional actions or show messages here if needed
             })
             .catch(error => console.error(error));
             location.reload();
-            }
-    })
+        }
+    });
 
     greetingInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
