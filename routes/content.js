@@ -169,15 +169,8 @@ const deletePage = async (pageId) => {
     }
 };
 
-const getPageHeading = () => {
-    const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
-    const logOutPage = database.pages.find((page) => page.id === '1');
-    return logOutPage.page_heading
-}
 
-
-
-const serveStaticFileWithHeading = (req, res, filePath, contentType) => {
+const serveDynamicHtml = (req, res, filePath, contentType) => {
    
     fs.readFile(filePath, 'utf-8', (err, content) => {
         if (err) {
@@ -185,17 +178,35 @@ const serveStaticFileWithHeading = (req, res, filePath, contentType) => {
             res.end('Internal Server Error');
         } else {
             const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
+            
+            const logOutPage = database.pages.find((page) => page.id === '1');
             const esimerkkisivu = database.pages.find((page) => page.id === '2');
-            const greetingText = getPageHeading();
 
-            const esimName = esimerkkisivu.page_name;
 
             let modifiedContent = 0;
             // Inject the dynamic content into the HTML
             if (filePath === path.join('views', 'home.html')) {
-                modifiedContent = content.replace('<h1 id="greetingText"></h1>', `<h1>${greetingText}</h1>`);
+                modifiedContent = content.replace('<h1 id="greetingText"></h1>', `<h1>${logOutPage.page_heading}</h1>`);
             } else if (filePath === path.join('views', 'esimerkkisivu.html')) {
-                modifiedContent = content.replace('<h1 id="esim-h1"></h1>', `<h1>${esimName}</h1>`);
+                modifiedContent = content
+                .replace('<h1 id="esim-name"> <span><i id="esim-name-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-name-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h1>', `<h1 id="esim-name">${esimerkkisivu.page_name} <span><i id="esim-name-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-name-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h1>`)
+                .replace('<p id="esim-p1"> <span><i id="esim-p1-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p1-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>', `<p id="esim-p1">${esimerkkisivu.page_paragraph1} <span><i id="esim-p1-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p1-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>`)
+                .replace('<h2 id="esim-h1"> <span><i id="esim-h1-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h1-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>', `<h2 id="esim-h1">${esimerkkisivu.page_heading1} <span><i id="esim-h1-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h1-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>`)
+                .replace('<p id="esim-p2"> <span><i id="esim-p2-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p2-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>', `<p id="esim-p2">${esimerkkisivu.page_paragraph2} <span><i id="esim-p2-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p2-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>`)
+                .replace('<h2 id="esim-h2"> <span><i id="esim-h2-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h2-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>', `<h2 id="esim-h2">${esimerkkisivu.page_heading2} <span><i id="esim-h2-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h2-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>`)
+                .replace('<p id="esim-p3"> <span><i id="esim-p3-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p3-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>', `<p id="esim-p3">${esimerkkisivu.page_paragraph3} <span><i id="esim-p3-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p3-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>`)
+                .replace('<h2 id="esim-h3"> <span><i id="esim-h3-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h3-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>', `<h2 id="esim-h3">${esimerkkisivu.page_heading3} <span><i id="esim-h3-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h3-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>`)
+                .replace('<p id="esim-p4"> <span><i id="esim-p4-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p4-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>', `<p id="esim-p4">${esimerkkisivu.page_paragraph4} <span><i id="esim-p4-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p4-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>`)
+                .replace('<h2 id="esim-h4"> <span><i id="esim-h4-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h4-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>', `<h2 id="esim-h4">${esimerkkisivu.page_heading4} <span><i id="esim-h4-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h4-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>`)
+                .replace('<p id="esim-p5"> <span><i id="esim-p5-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p5-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>', `<p id="esim-p5">${esimerkkisivu.page_paragraph5} <span><i id="esim-p5-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p5-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>`)
+                .replace('<h2 id="esim-h5"> <span><i id="esim-h5-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h5-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>', `<h2 id="esim-h5">${esimerkkisivu.page_heading5} <span><i id="esim-h5-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h5-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>`)
+                .replace('<p id="esim-p6"> <span><i id="esim-p6-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p6-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>', `<p id="esim-p6">${esimerkkisivu.page_paragraph6} <span><i id="esim-p6-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p6-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>`)
+                .replace('<h2 id="esim-h6"> <span><i id="esim-h6-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h6-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>', `<h2 id="esim-h6">${esimerkkisivu.page_heading6} <span><i id="esim-h6-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-h6-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></h2>`)
+                .replace('<p id="esim-p7"> <span><i id="esim-p7-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p7-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>', `<p id="esim-p7">${esimerkkisivu.page_paragraph7} <span><i id="esim-p7-open" class="fa-solid fa-pen-to-square" style="color: #c80efb; cursor: pointer;"></i><i id="esim-p7-finish" class="fa-solid fa-pen-to-square" style="color: #0efb41; cursor: pointer; display: none;"></i></span></p>`)
+
+                /*modifiedContent = modifiedContent.replace('<p id="esim-p1"></p>', `<p>${esimerkkisivu_p1}</p>`);
+                modifiedContent = modifiedContent.replace('<h2 id="esim-h1></h2>', `<h2>${esimerkkisivuPageHeading}</h2>`);
+            */
             }
             res.writeHead(200, { 'Content-Type': contentType });
             res.end(modifiedContent);
@@ -234,7 +245,7 @@ const handleStaticFiles = (req, res, next) => {
     else if (url === '/home/esimerkkisivu') {
         if (req.method === 'GET') {
             const esimerkkisivuPath = path.join( 'views', 'esimerkkisivu.html');
-            serveStaticFileWithHeading(req, res, esimerkkisivuPath, 'text/html');
+            serveDynamicHtml(req, res, esimerkkisivuPath, 'text/html');
         } else if (req.method === 'PUT') {
             let data = '';
             req.on('data', (chunk) => {
@@ -262,7 +273,7 @@ const handleStaticFiles = (req, res, next) => {
     else if ((url.startsWith('/home') || url === '/')) {
         if (req.method === 'GET') {
             const homePagePath = path.join( 'views', 'home.html');
-            serveStaticFileWithHeading(req, res, homePagePath, 'text/html');
+            serveDynamicHtml(req, res, homePagePath, 'text/html');
         } else if (req.method === 'PUT') {
             let data = '';
 
@@ -276,7 +287,7 @@ const handleStaticFiles = (req, res, next) => {
                     const updatedPage = putPage('1', updatedData)
                     if (updatedPage) {
                         res.writeHead(200, { 'Content-Type': 'text/plain', 'Allow': 'PUT' });
-                        res.end(`This is New Greeting Text : ${updatedPage.page_heading}`)
+                        res.end(`This is New Greeting Text : ${updatedPage}`)
                     } else {
                         res.writeHead(404, { 'Content-Type': 'text/plain' });
                         res.end('Page Not Found')

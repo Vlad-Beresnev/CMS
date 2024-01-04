@@ -21,6 +21,7 @@
     max-width: 1025px;
 }
 
+
 .line-text {
     margin-top: 10px;
     display: flex;
@@ -30,19 +31,4 @@
     align-items: center;
 }
 
-.esim-view1 p, .esim-view1 h2 {
-    margin: 5px;
-}
-#esim-h1-open {
-    display: none;
-    padding: 50px;
-    margin: -50px;
-}
 
-.esim-view1 h1:hover + #esim-h1-open {
-    display: inline;
-}
-
-.esim-view1 #esim-h1-open:hover {
-    display: inline;
-}
