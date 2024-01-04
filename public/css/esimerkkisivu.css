@@ -31,4 +31,37 @@
     align-items: center;
 }
 
+#esim-image-icon {
+    position: absolute;
+    cursor: pointer;
+    transform: translateX(-50%, -50%);
+    margin-bottom: 360px;
+    scale: calc(4);
+    display: inline;
+}
 
+#esim-image-store {
+    display: none;
+    background-color: #086BA8;
+    width: 400px;
+    max-width: 400px;
+    height: 300px;
+    position: absolute;
+    margin-bottom: 350px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.choosen-images {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#choosen-images-title {
+    position: absolute;
+    margin-top: 135px;
+    transform: translateX(-50%, -50%);
+}
