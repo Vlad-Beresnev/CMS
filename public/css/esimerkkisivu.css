@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .esim-view1 {
     display: flex;
     flex-direction: column;
@@ -33,28 +37,40 @@
 
 #esim-image-icon {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     cursor: pointer;
-    transform: translateX(-50%, -50%);
-    margin-bottom: 360px;
-    scale: calc(4);
-    display: inline;
+    font-size: 50px;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+#esim-image {
+    display: block;
+    width: 100%;
 }
 
 #esim-image-store {
     display: none;
     background-color: #086BA8;
     width: 400px;
-    max-width: 400px;
+    max-width: 350px;
     height: 300px;
     position: absolute;
-    margin-bottom: 350px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     flex-wrap: wrap;
     justify-content: space-around;
 }
 
 .choosen-images {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     object-fit: cover;
     margin: 10px;
     cursor: pointer;
@@ -65,3 +81,14 @@
     margin-top: 135px;
     transform: translateX(-50%, -50%);
 }
+
+#mode-icon {
+    position: absolute;
+    left: 155px;
+    cursor: pointer;
+}
+
+.logo {
+    width: 60px;
+}
+

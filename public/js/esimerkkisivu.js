@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenName = document.getElementById('esim-name-open');
     const pageFinishName = document.getElementById('esim-name-finish');
     const pageInputName = document.getElementById('esim-name-input');
+    const pageName = document.getElementById('esim-name');
+
     
     // Fetch the initial greeting text from the server
     fetch('/database.json')
@@ -37,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pageFinishName.style.display = 'inline';
         pageInputName.style.display = 'inline';
         pageOpenName.style.display = 'none';
+        pageInputName.value = pageName.textContent;
         pageInputName.focus();
     });
         
@@ -54,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(updatedPage => {
         })
-        .catch(error => console.error(error));
+        .catch(error => console.error(error));            
         location.reload();
     });
 
@@ -111,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pageFinishP1.style.display = 'inline';
         pageInputP1.style.display = 'inline';
         pageOpenP1.style.display = 'none';
+        pageInputP1.value = pageP1.textContent;
         pageInputP1.focus();
     });
 
@@ -169,6 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenH1 = document.getElementById('esim-h1-open');
     const pageFinishH1 = document.getElementById('esim-h1-finish');
     const pageInputH1 = document.getElementById('esim-h1-input');
+    const pageH1 = document.getElementById('esim-h1');
+
 
     fetch('/database.json')
     .then(response => response.json())
@@ -180,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pageFinishH1.style.display = 'inline';
         pageInputH1.style.display = 'inline';
         pageOpenH1.style.display = 'none';
+        pageInputH1.value = pageH1.textContent;
         pageInputH1.focus();
     });
 
@@ -239,6 +246,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenP2 = document.getElementById('esim-p2-open');
     const pageFinishP2 = document.getElementById('esim-p2-finish');
     const pageInputP2 = document.getElementById('esim-p2-input');
+    const pageP2 = document.getElementById('esim-p2');
+
 
     fetch('/database.json')
     .then(response => response.json())
@@ -250,6 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pageFinishP2.style.display = 'inline';
         pageInputP2.style.display = 'inline';
         pageOpenP2.style.display = 'none';
+        pageInputP2.value = pageP2.textContent;
         pageInputP2.focus();
     });
 
@@ -308,11 +318,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenH2 = document.getElementById('esim-h2-open');
     const pageFinishH2 = document.getElementById('esim-h2-finish');
     const pageInputH2 = document.getElementById('esim-h2-input');
+    const pageH2 = document.getElementById('esim-h2');
+
 
     pageOpenH2.addEventListener('click', () => {
         pageFinishH2.style.display = 'inline';
         pageInputH2.style.display = 'inline';
         pageOpenH2.style.display = 'none';
+        pageInputH2.value = pageH2.textContent;
         pageInputH2.focus();
     });
 
@@ -354,11 +367,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenP3 = document.getElementById('esim-p3-open');
     const pageFinishP3 = document.getElementById('esim-p3-finish');
     const pageInputP3 = document.getElementById('esim-p3-input');
+    const pageP3 = document.getElementById('esim-p3');
+
 
     pageOpenP3.addEventListener('click', () => {
         pageFinishP3.style.display = 'inline';
         pageInputP3.style.display = 'inline';
         pageOpenP3.style.display = 'none';
+        pageInputP3.value = pageP3.textContent;
         pageInputP3.focus();
     });
 
@@ -398,11 +414,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenH3 = document.getElementById('esim-h3-open');
     const pageFinishH3 = document.getElementById('esim-h3-finish');
     const pageInputH3 = document.getElementById('esim-h3-input');
+    const pageH3 = document.getElementById('esim-h3');
 
     pageOpenH3.addEventListener('click', () => {
         pageFinishH3.style.display = 'inline';
         pageInputH3.style.display = 'inline';
         pageOpenH3.style.display = 'none';
+        pageInputH3.value = pageH3.textContent;
         pageInputH3.focus();
     });
 
@@ -442,11 +460,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenP4 = document.getElementById('esim-p4-open');
     const pageFinishP4 = document.getElementById('esim-p4-finish');
     const pageInputP4 = document.getElementById('esim-p4-input');
+    const pageP4 = document.getElementById('esim-p4');
+
 
     pageOpenP4.addEventListener('click', () => {
         pageFinishP4.style.display = 'inline';
         pageInputP4.style.display = 'inline';
         pageOpenP4.style.display = 'none';
+        pageInputP4.value = pageP4.textContent;
         pageInputP4.focus();
     });
 
@@ -486,11 +507,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenH4 = document.getElementById('esim-h4-open');
     const pageFinishH4 = document.getElementById('esim-h4-finish');
     const pageInputH4 = document.getElementById('esim-h4-input');
+    const pageH4 = document.getElementById('esim-h4');
+
 
     pageOpenH4.addEventListener('click', () => {
         pageFinishH4.style.display = 'inline';
         pageInputH4.style.display = 'inline';
         pageOpenH4.style.display = 'none';
+        pageInputH4.value = pageH4.textContent;
         pageInputH4.focus();
     });
 
@@ -530,11 +554,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenP5 = document.getElementById('esim-p5-open');
     const pageFinishP5 = document.getElementById('esim-p5-finish');
     const pageInputP5 = document.getElementById('esim-p5-input');
+    const pageP5 = document.getElementById('esim-p5');
+
 
     pageOpenP5.addEventListener('click', () => {
         pageFinishP5.style.display = 'inline';
         pageInputP5.style.display = 'inline';
         pageOpenP5.style.display = 'none';
+        pageInputP5.value = pageP5.textContent;
         pageInputP5.focus();
     });
 
@@ -574,11 +601,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenH5 = document.getElementById('esim-h5-open');
     const pageFinishH5 = document.getElementById('esim-h5-finish');
     const pageInputH5 = document.getElementById('esim-h5-input');
+    const pageH5 = document.getElementById('esim-h5');
+
 
     pageOpenH5.addEventListener('click', () => {
         pageFinishH5.style.display = 'inline';
         pageInputH5.style.display = 'inline';
         pageOpenH5.style.display = 'none';
+        pageInputH5.value = pageH5.textContent;
         pageInputH5.focus();
     });
 
@@ -618,11 +648,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenP6 = document.getElementById('esim-p6-open');
     const pageFinishP6 = document.getElementById('esim-p6-finish');
     const pageInputP6 = document.getElementById('esim-p6-input');
+    const pageP6 = document.getElementById('esim-p6');
+
 
     pageOpenP6.addEventListener('click', () => {
         pageFinishP6.style.display = 'inline';
         pageInputP6.style.display = 'inline';
         pageOpenP6.style.display = 'none';
+        pageInputP6.value = pageP6.textContent;
         pageInputP6.focus();
     });
 
@@ -662,11 +695,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenH6 = document.getElementById('esim-h6-open');
     const pageFinishH6 = document.getElementById('esim-h6-finish');
     const pageInputH6 = document.getElementById('esim-h6-input');
+    const pageH6 = document.getElementById('esim-h6');
+
 
     pageOpenH6.addEventListener('click', () => {
         pageFinishH6.style.display = 'inline';
         pageInputH6.style.display = 'inline';
         pageOpenH6.style.display = 'none';
+        pageInputH6.value = pageH6.textContent;
         pageInputH6.focus();
     });
 
@@ -706,11 +742,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageOpenP7 = document.getElementById('esim-p7-open');
     const pageFinishP7 = document.getElementById('esim-p7-finish');
     const pageInputP7 = document.getElementById('esim-p7-input');
+    const pageP7 = document.getElementById('esim-p7');
+
 
     pageOpenP7.addEventListener('click', () => {
         pageFinishP7.style.display = 'inline';
         pageInputP7.style.display = 'inline';
         pageOpenP7.style.display = 'none';
+        pageInputP7.value = pageP7.textContent;
         pageInputP7.focus();
     });
 
@@ -748,7 +787,16 @@ document.addEventListener('DOMContentLoaded', () => {
 function choosePic(newSrc) {
     const image = document.getElementById('esim-image');
     image.src = newSrc;
-    localStorage.setItem('selectedImageSrc', newSrc);
+    fetch('/home/esimerkkisivu', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: newSrc }),
+    })
+    .then(response => response.json())
+    .then(updatedPage => {})
+    .catch(error => console.log(error));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -756,11 +804,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const imageStore = document.getElementById('esim-image-store');
     const image = document.getElementById('esim-image');
     const images = document.getElementsByClassName('choosen-images');
-
-    const savedImageSrc = localStorage.getItem('selectedImageSrc');
-    if ( savedImageSrc) {
-        image.src = savedImageSrc;
-    }
 
     imageIcon.addEventListener('click', () => {
         imageIcon.style.display = "none";
@@ -775,3 +818,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+function switchReadMode(value) {
+    fetch('/home/esimerkkisivu', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json",
+        },
+        body: JSON.stringify({ 
+            id: '2',
+            defaultMode: value }),
+    })
+    then(response => response.json())
+    .then(updatedPage => {})
+    .catch(error => console.log(error));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const modeIcon = document.getElementById('mode-icon');
+    const icons = document.getElementsByClassName('icon');
+    let defaultMode = 'none';
+    
+
+    modeIcon.addEventListener('click', () => {
+        defaultMode = defaultMode === 'none' ? 'inline' : 'none';
+            for (let icon of icons) {
+                icon.style.display = defaultMode;                
+            }
+            switchReadMode(defaultMode);
+        });
+    }
+)
+
