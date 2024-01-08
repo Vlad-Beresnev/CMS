@@ -257,3 +257,31 @@ html {
 html::-webkit-scrollbar {
     display: none;  /* Safari and Chrome */
 }
+
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 40px;
+}
+
+
+.text-content {
+    flex: 1;
+}
+
+
+
+.image-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-content img {
+    max-width: 100%;
+    width: 200px;
+    height: auto;
+}
