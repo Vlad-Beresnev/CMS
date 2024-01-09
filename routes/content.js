@@ -208,6 +208,8 @@ const serveDynamicHtml = (req, res, filePath, contentType) => {
                 /*modifiedContent = modifiedContent.replace('<p id="esim-p1"></p>', `<p>${esimerkkisivu_p1}</p>`);
                 modifiedContent = modifiedContent.replace('<h2 id="esim-h1></h2>', `<h2>${esimerkkisivuPageHeading}</h2>`);
             */
+            } else if (filePath === path.join('views', 'readMore.html')) {
+                modifiedContent = content;
             }
             res.writeHead(200, { 'Content-Type': contentType });
             res.end(modifiedContent);
@@ -270,8 +272,15 @@ const handleStaticFiles = (req, res, next) => {
             res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
             res.end('Method Not Allowed');
         }
-    }
-    else if ((url.startsWith('/home') || url === '/')) {
+    }  else if (url === '/home/read_more') {
+        if (req.method === 'GET') {
+            const readMorePath = path.join( 'views', 'readMore.html');
+            serveDynamicHtml(req, res, readMorePath, 'text/html');
+        } else {
+            res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
+            res.end('Method Not Allowed');
+        }
+    } else if ((url.startsWith('/home') || url === '/')) {
         if (req.method === 'GET') {
             const homePagePath = path.join( 'views', 'home.html');
             serveDynamicHtml(req, res, homePagePath, 'text/html');
@@ -298,7 +307,7 @@ const handleStaticFiles = (req, res, next) => {
                     res.writeHead(400, { 'Content-Type': 'text/plain' });
                     res.end('Bad Request');
                 }
-            })
+            });
         } else {
             res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
             res.end('Method Not Allowed');

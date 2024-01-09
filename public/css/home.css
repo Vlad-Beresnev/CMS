@@ -266,14 +266,15 @@ html::-webkit-scrollbar {
     padding: 120px;
 }
 
-.item {
+.view2 .item {
     margin: 20px;
     min-width: 380px;
     height: 400px;
     display: flex;
-    justify-content: space-between;
     align-content: center;
-    align-items: center;
+    
+    justify-content:flex-start;
+    align-items: flex-start;
     flex: 1;
     flex-direction: column;
     box-sizing: border-box;
@@ -302,4 +303,96 @@ html::-webkit-scrollbar {
     object-fit: cover;
     width: 400px;
     height: 200px;
+}
+
+.view3 {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 20px 60px 0px 60px;
+}
+
+.view3 .item {
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex: 1;
+    flex-direction: column;
+    box-sizing: border-box;
+    gap: 20px;
+}
+
+
+
+#palvelut {
+    display: flex;
+    justify-content: center;
+}
+
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 120px 20px 120px;
+    background: #f0f0f0;
+}
+
+.footer-contact,
+.footer-info {
+    flex-basis: 33.33%;
+}
+
+.footer-info h3, .footer-contact h3 {
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.info-links p {
+    margin-bottom: 40px;
+}
+
+.footer-contact {
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-contact h3 {
+    text-align: center;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1.5px solid #000000;
+    border-radius: 4px;
+}
+
+.contact-form button {
+    width:100%;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px;
+    background: #f0f0f0;
+    color: #000;
 }

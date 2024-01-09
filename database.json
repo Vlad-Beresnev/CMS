@@ -17,12 +17,12 @@
       "url": "logout-page",
       "author": "beresnev",
       "page_name": "Logout Page",
-      "page_heading": "Content Management System",
+      "page_heading": "Content",
       "background_image": "new-background-image-url.jpg",
       "address": "peter@gmail.com",
       "phone": "New Phone Number",
       "email": "new.email@example.com",
-      "modified_at": "2024-01-08T10:22:09.636Z",
+      "modified_at": "2024-01-09T11:02:37.789Z",
       "text": "Updated Page Text",
       "image": "new-image-url.jpg",
       "defaultMode": "inline"
@@ -48,12 +48,12 @@
       "text": "Updated Page Text",
       "image": "http://localhost:3000/images/mushrooms.png",
       "background_image": "new-background-image-url.jpg",
-      "defaultMode": "none",
+      "defaultMode": "inline",
       "address": "peter@gmail.com",
       "phone": "New Phone Number",
       "email": "new.email@example.com",
       "created_at": "2023-11-22T09:53:36.329Z",
-      "modified_at": "2024-01-08T10:23:10.224Z"
+      "modified_at": "2024-01-09T09:33:16.980Z"
     },
     {
       "id": "3",
