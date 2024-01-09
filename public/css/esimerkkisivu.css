@@ -1,5 +1,12 @@
 body {
     overflow-x: hidden;
+    
+}
+
+.navbar {
+    top: 0;
+    left: 0;
+    width: 100%;
 }
 
 .esim-view1 {
@@ -7,12 +14,14 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 80px;
     padding: 40px;
-    gap: 20px;
+    gap: 20px;    
 }
 
 .esim-view1 h1 {
     font-size: 56px;
+  
 }
 
 .esim-view1 img {

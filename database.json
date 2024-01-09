@@ -48,12 +48,12 @@
       "text": "Updated Page Text",
       "image": "http://localhost:3000/images/mushrooms.png",
       "background_image": "new-background-image-url.jpg",
-      "defaultMode": "inline",
+      "defaultMode": "none",
       "address": "peter@gmail.com",
       "phone": "New Phone Number",
       "email": "new.email@example.com",
       "created_at": "2023-11-22T09:53:36.329Z",
-      "modified_at": "2024-01-09T09:33:16.980Z"
+      "modified_at": "2024-01-09T12:33:08.451Z"
     },
     {
       "id": "3",

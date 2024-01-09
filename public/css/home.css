@@ -9,11 +9,16 @@ body {
 }
 
 .navbar {
+    position: fixed;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 20px 20px;
+    z-index: 2;
     box-shadow: 0 1px 8px #ddd;
+    background-color: #fff;
+    width: 100%;
+    top: 0;
+    left: 0;
 }
 
 .logo {
@@ -76,7 +81,7 @@ body {
 
 .sidebar nav {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 100px;
 }
 
 .sidebar ul {
@@ -191,6 +196,7 @@ body {
     text-align: center;
     background: url('../images/anique-statue.png') center/cover no-repeat;
     position: relative;
+    margin-top: 75px;
 }
 
 .view1 h1 {
