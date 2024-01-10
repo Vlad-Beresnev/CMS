@@ -17,12 +17,12 @@ const app = http.createServer((req, res) => {
         const url = req.url || ''
     
         if (url.startsWith('/auth')) {
-            authRoutes(req, res);
+            contentRoutes(req, res);
         } else if (url.startsWith('/intranet')) {
             contentRoutes(req, res);
-        } else if (url.startsWith('/home')) {
+        } /*else if (url.startsWith('/home')) {
             contentRoutes(req, res);
-        }
+        }*/
         else if (userSession.role !== 'admin') {
             res.writeHead(403, { 'Content-Type': 'text/plain' });
             res.end('Forbidden: Only admin users can access this route');

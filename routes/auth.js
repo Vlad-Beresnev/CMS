@@ -112,6 +112,67 @@ function logout(userSession)  {
 }
 
 
+const serveDynamicHtml = (req, res, filePath, contentType) => {
+   
+    fs.readFile(filePath, 'utf-8', (err, content) => {
+        if (err) {
+            res.writeHead(500);
+            res.end('Internal Server Error');
+        } else {
+            const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
+            
+            
+
+            let modifiedContent = 0;
+            // Inject the dynamic content into the HTML
+            if (filePath === path.join('views', 'loginPage.html')) {
+                modifiedContent = content.replace('<h1 id="greetingText"></h1>', `<h1>${logOutPage.page_heading}</h1>`);
+            }  
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(modifiedContent);
+        }
+    });
+};
+
+function serveStaticFile (req, res, filePath, contentType) {
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            console.error(`Error reading file ${filePath}: ${err.message}`)
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Internal Server Error');
+            return;
+        } else {
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(data);
+        }
+    })
+}
+
+const handleStaticFiles = (req, res, next) => {
+    const url = req.url || '';
+
+    if (url.startsWith('/css')) {
+        const cssFilePath = path.join('public', 'css', url.substring(5));
+        serveStaticFile(req, res, cssFilePath, 'text/css');
+    } else if (url.startsWith('/js')) {
+        const jsFilePath = path.join('public', 'js', url.substring(4));
+        serveStaticFile(req, res, jsFilePath, 'application/javascript');
+    } else if (url.startsWith('/images')) {
+        const imagePath = path.join('public', 'images', url.substring(7));
+        serveStaticFile(req, res, imagePath, 'image/png');
+    } 
+    else if (url === '/auth/login') {
+        if (req.method === 'GET') {
+            const loginPagePath = path.join( 'views', 'loginPage.html');
+            serveDynamicHtml(req, res, loginPagePath, 'text/html');
+        } else {
+            res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
+            res.end('Method Not Allowed');
+        }
+    }
+}
+
+// TRASHHHHH
 const authRoutes = (req, res) => {
     const url = req.url || ''
     if (url === '/auth/login') {
@@ -247,7 +308,9 @@ const authRoutes = (req, res) => {
 }
 
 
+
 module.exports = {
-    authRoutes,
+    // authRoutes,
     userSession,
+    handleStaticFiles
 }

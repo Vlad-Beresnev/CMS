@@ -3,8 +3,170 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="/css/readMore.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/home.css"/>
         <title>Read More</title>
     </head>
     <body>
-        <h1>Welcome Read More Page!</h1>
+        <header class="navbar">
+            <a class="logo" href="/home"> 
+                <h1 class="logo">LOGO</h1>
+            </a>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/home">Etusivu</a></li>
+                    <li><a href="/home/esimerkkisivu">Esimerkkisivu</a></li>
+                    <li><a href="/auth/login" type="button" class="button" id="login">Kirjaudu</a></li>
+    
+                </ul>
+            </nav>
+            <div class="menu-icon" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </header>
+        <div class="sidebar" id="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="/home">Etusivu</a></li>
+                    <li><a href="/home/esimerkkisivu">Esimerkkisivu</a></li>
+                    <br>
+                    <li><a href="/auth/login" type="button" class="button" id="login2">Kirjaudu</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="gallery">
+            <div class="gallery-card" id="card1">
+                <img src="../images/underwater.png" width="680px" height="425px" alt="image-1"/>
+                <div class="gallery-text">
+                    <h3>Referenssi 1</h3>
+                    <p>Lorem ipsum dolor sit amet, 
+                        consectetur adipiscing elit. Praesent 
+                        a pretium ex. Fusce rhoncus lacus 
+                        eget diam varius, vitae congue elit 
+                        porta. Orci varius natoque penatibus 
+                        et magnis dis parturient montes, 
+                        nascetur ridiculus mus. Nunc eget 
+                        diam et eros iaculis ornare. Nunc 
+                        diam dui, venenatis eu tellus et, 
+                        fermentum dictum felis. Sed semper 
+                        lectus id facilisis viverra. Phasellus 
+                        sit amet magna id lectus cursus 
+                        vulputate. Quisque augue leo, ornare 
+                        eu mattis quis, dignissim a erat.
+                        
+                    
+                    Orci varius natoque penatibus et 
+                    magnis dis parturient montes, 
+                    nascetur ridiculus mus. Nunc eget 
+                    diam et eros iaculis ornare. Nunc 
+                    diam dui, venenatis eu tellus et, 
+                    fermentum dictum felis. Sed semper 
+                    lectus id facilisis viverra. Phasellus 
+                    sit amet magna id lectus cursus 
+                    vulputate. Quisque augue leo, ornare 
+                    eu mattis quis, dignissim a erat.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card" id="card2" style="display: none;">
+                <img src="../images/eluminators.png" width="680px" height="425px" alt="image-1"/>
+                <div class="gallery-text">
+                    <h3>Referenssi 2</h3>
+                    <p>Lorem ipsum dolor sit amet, 
+                        consectetur adipiscing elit. Praesent 
+                        a pretium ex. Fusce rhoncus lacus 
+                        eget diam varius, vitae congue elit 
+                        porta. Orci varius natoque penatibus 
+                        et magnis dis parturient montes, 
+                        nascetur ridiculus mus. Nunc eget 
+                        diam et eros iaculis ornare. Nunc 
+                        diam dui, venenatis eu tellus et, 
+                        fermentum dictum felis. Sed semper 
+                        lectus id facilisis viverra. Phasellus 
+                        sit amet magna id lectus cursus 
+                        vulputate. Quisque augue leo, ornare 
+                        eu mattis quis, dignissim a erat.
+                        
+                    
+                    Orci varius natoque penatibus et 
+                    magnis dis parturient montes, 
+                    nascetur ridiculus mus. Nunc eget 
+                    diam et eros iaculis ornare. Nunc 
+                    diam dui, venenatis eu tellus et, 
+                    fermentum dictum felis. Sed semper 
+                    lectus id facilisis viverra. Phasellus 
+                    sit amet magna id lectus cursus 
+                    vulputate. Quisque augue leo, ornare 
+                    eu mattis quis, dignissim a erat.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card" id="card3" style="display: none;">
+                <img src="../images/success.png" width="680px" height="425px" alt="image-1"/>
+                <div class="gallery-text">
+                    <h3>Referenssi 3</h3>
+                    <p>Lorem ipsum dolor sit amet, 
+                        consectetur adipiscing elit. Praesent 
+                        a pretium ex. Fusce rhoncus lacus 
+                        eget diam varius, vitae congue elit 
+                        porta. Orci varius natoque penatibus 
+                        et magnis dis parturient montes, 
+                        nascetur ridiculus mus. Nunc eget 
+                        diam et eros iaculis ornare. Nunc 
+                        diam dui, venenatis eu tellus et, 
+                        fermentum dictum felis. Sed semper 
+                        lectus id facilisis viverra. Phasellus 
+                        sit amet magna id lectus cursus 
+                        vulputate. Quisque augue leo, ornare 
+                        eu mattis quis, dignissim a erat.
+                        
+                    
+                    Orci varius natoque penatibus et 
+                    magnis dis parturient montes, 
+                    nascetur ridiculus mus. Nunc eget 
+                    diam et eros iaculis ornare. Nunc 
+                    diam dui, venenatis eu tellus et, 
+                    fermentum dictum felis. Sed semper 
+                    lectus id facilisis viverra. Phasellus 
+                    sit amet magna id lectus cursus 
+                    vulputate. Quisque augue leo, ornare 
+                    eu mattis quis, dignissim a erat.</p>
+                </div>
+            </div>
+
+            <div class="navigation-dots">
+                <span class="dot active" data-target="card1"></span>
+                <span class="dot" data-target="card2"></span>
+                <span class="dot" data-target="card3"></span>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <div class="footer-info">
+                <h3>
+                    LOGO
+                </h3>
+                <div class="info-links">    
+                    <p>Osoite</p>
+                    <p>Puhelinnumero</p>
+                    <p>Sähköposti</p>
+                </div>
+            </div>
+            <div class="footer-contact">
+                <h3>Ota yhteyttä</h3>
+                <form class="contact-form">
+                    <input type="text" placeholder="etu ja sukunimi">
+                    <input type="tel" placeholder="puhelinnumero">
+                    <input type="email" placeholder="sähköposti">
+                    <textarea placeholder="viesti"></textarea>
+                    <button type="submit">Lähetä</button>
+                </form>
+            </div>
+        </footer>
+        <div class="footer-bottom">
+            <p>Taitaja © 2022</p>
+        </div>
+        <script src="/js/home.js"></script>
+        <script src="/js/readMore.js"></script>
+        <script src="https://kit.fontawesome.com/4dd8f67d7b.js" crossorigin="anonymous"></script>
     </body>
+        

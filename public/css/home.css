@@ -128,6 +128,7 @@ body {
     margin-right: 10px;
 }
 
+
 @media (max-width: 610px) {
     .navbar .nav {
         display: none;
@@ -141,6 +142,16 @@ body {
         display: block;
         transform: translateX(100%);
     }
+
+    .view2 {
+        padding: 40px !important;
+       }
+
+    .view1 {
+        padding-right: 0px;
+    }
+    
+   
  
     @keyframes slideIn {
         from {
@@ -187,16 +198,18 @@ body {
     }
 } 
 
+
+
 .view1 {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 80vh;
+    height: 75vh;
     text-align: center;
     background: url('../images/anique-statue.png') center/cover no-repeat;
     position: relative;
     margin-top: 75px;
+    margin-right: 0px;
 }
 
 .view1 h1 {
@@ -269,16 +282,16 @@ html::-webkit-scrollbar {
     flex: 1;
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 120px;
+    padding: 20px 120px 20px 120px;
+    gap: 20px;
 }
 
 .view2 .item {
     margin: 20px;
     min-width: 380px;
-    height: 400px;
+    height: auto;
     display: flex;
     align-content: center;
-    
     justify-content:flex-start;
     align-items: flex-start;
     flex: 1;
@@ -307,7 +320,7 @@ html::-webkit-scrollbar {
 .image-content img {
     margin-top: 50px;
     object-fit: cover;
-    width: 400px;
+    width: 395px;
     height: 200px;
 }
 
@@ -401,4 +414,27 @@ html::-webkit-scrollbar {
     padding: 20px;
     background: #f0f0f0;
     color: #000;
+}
+
+
+
+@media (max-width: 1080px) and (min-width: 881px) {
+    .view2 {
+        flex-direction: column;
+    }
+
+    #image-float-right{
+        justify-content:flex-end;
+        align-items: flex-end;
+    }
+}
+
+@media (max-width: 880px) {
+    .view2 .item {
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }        
+
+    
 }

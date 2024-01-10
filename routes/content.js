@@ -169,6 +169,25 @@ const deletePage = async (pageId) => {
     }
 };
 
+const authenticateUser = async (username, password) => {
+    const database = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
+    const user = database.users.find((user) => user.username === username);
+
+    if (user && (await argon2.verify(user.password, password))) {
+        console.log('Authenticated User:', user);
+        return user;
+    }
+
+    return null;
+};
+
+var sessionId = function () {
+    var rand = function() {
+        return Math.random().toString(36).substr(2);
+    }
+    return rand() + rand();
+}
+
 
 const serveDynamicHtml = (req, res, filePath, contentType) => {
    
@@ -210,6 +229,8 @@ const serveDynamicHtml = (req, res, filePath, contentType) => {
             */
             } else if (filePath === path.join('views', 'readMore.html')) {
                 modifiedContent = content;
+            } else if (filePath === path.join('views', 'loginPage.html')) {
+                modifiedContent = content;
             }
             res.writeHead(200, { 'Content-Type': contentType });
             res.end(modifiedContent);
@@ -244,7 +265,6 @@ const handleStaticFiles = (req, res, next) => {
         const imagePath = path.join('public', 'images', url.substring(7));
         serveStaticFile(req, res, imagePath, 'image/png');
     } 
-    // LOG OUT PAGE
     else if (url === '/home/esimerkkisivu') {
         if (req.method === 'GET') {
             const esimerkkisivuPath = path.join( 'views', 'esimerkkisivu.html');
@@ -276,6 +296,46 @@ const handleStaticFiles = (req, res, next) => {
         if (req.method === 'GET') {
             const readMorePath = path.join( 'views', 'readMore.html');
             serveDynamicHtml(req, res, readMorePath, 'text/html');
+        } else {
+            res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
+            res.end('Method Not Allowed');
+        }
+    } else if (url === '/auth/login') {
+        if (req.method === 'GET') {
+            const loginPagePath = path.join( 'views', 'loginPage.html');
+            serveDynamicHtml(req, res, loginPagePath, 'text/html');
+        } else if (req.method === 'POST') {
+            let data = '';
+            req.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            req.on('end', async () => {
+                try {
+                    const parsedData = JSON.parse(data);
+                    const username = parsedData.username;
+                    const password = parsedData.password;
+                    const user = await authenticateUser(username, password);
+
+                    if (user && user.password) {
+                        userSession['id'] = sessionId();
+                        userSession['username'] = user.username;
+                        userSession['password'] = user.password;
+                        userSession['role'] = user.role;
+
+                        res.writeHead(200, { 'Contente-Type': 'application/json'})
+                        res.end(`Welcome ${userSession.username}`)
+                        console.log(userSession)
+                    } else {
+                        res.writeHead(401, { 'Contente-Type': 'text/plain'})
+                        res.end('Invalid credentials')
+                    }
+                } catch {
+                    console.error('Error parsing request body:', req.error);
+                    res.writeHead(400, { 'Content-Type': 'text/plain' });
+                    res.end('Bad Request');
+                }
+            })
         } else {
             res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET' });
             res.end('Method Not Allowed');
