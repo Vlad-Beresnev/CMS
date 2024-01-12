@@ -1,0 +1,577 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+    line-height: 1.4;
+}
+
+.navbar {
+    position: fixed;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    z-index: 2;
+    box-shadow: 0 1px 8px #ddd;
+    background-color: #fff;
+    top: 0;
+    left: 0;
+}
+
+
+
+.logo {
+    margin-right: auto;
+    font-size: 32px;
+    padding: 10px 10px;
+}
+
+.navbar li {
+    list-style: none;
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.nav li {
+    padding: 10px 25px;
+}
+
+
+
+.button {
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+}
+
+#login {
+    padding: 10px 40px;
+}
+
+.navbar a {
+    width: auto;
+    text-decoration: none;
+    color: #000;
+    transition: all 0.3s ease 0s;
+}
+
+.navbar a:hover, .button:hover {
+    color: #fd1150;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 1; 
+    overflow: hidden;
+    transform: translateX(-100%);
+}
+
+.sidebar nav {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.sidebar ul {
+    padding: 0;
+}
+
+.sidebar li {
+    display: block;
+    padding: 10px;
+}
+
+.sidebar a {
+    color: #555;
+    text-decoration: none;
+}
+
+.sidebar a:hover{
+    color: #fd1150;
+}
+
+#login2 {
+    padding: 10px 40px;
+    
+}
+
+.sidebar {
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+}
+
+
+.sidebar.open {
+    transform: translateX(0%);
+}
+
+.sidebar.close {
+    transform: translateX(100%); 
+}
+
+.menu-icon {
+    display: none;
+    cursor: pointer;
+    z-index: 5 !important;
+    font-size: 32px;
+    margin-right: 10px;
+}
+
+
+/* VIEW1 */
+
+
+.view1 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 75vh;
+    text-align: center;
+    background: url('../images/anique-statue.png') center/cover no-repeat;
+    margin-top: 75px;
+}
+
+.view1 h1 {
+    font-size: 32px;
+    color: #fff;
+    padding: 20px;
+    max-width: 85%;
+    overflow-wrap: break-word;
+    position: relative;
+}
+
+.view1 button {
+    padding: 10px;
+    min-width: 300px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #000;
+    position: relative;
+    top: calc(25% - 20px); /* Position above the h1 */
+}
+
+#greetEdit, #greetFinish {
+    position: absolute;
+    cursor: pointer;
+    display: none;
+    top: auto;
+    margin-top: 35px;
+    padding-top: 35px;
+     /* Position directly below the h1 */
+    transform: translateX(-50%, -50%); /* Center horizontally */
+}
+
+#greetEdit {
+    /* Additional specific styles for #greetEdit if needed */
+    margin-top: 10px; /* Space below h1 */
+}
+
+#greetFinish {
+    /* Additional specific styles for #greetFinish if needed */
+    margin-top: 10px; /* Space below h1 */
+}
+
+#greetingInput {
+    position: absolute;
+    margin-bottom: 30px;
+    width: 300px;
+    height: 52px;
+}
+
+.view1 h1:hover + #greetEdit {
+    display: inline;
+}
+
+#greetEdit:hover {
+    display: inline;
+}
+
+html {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+html::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
+
+.view2 {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.view2 .item {
+    margin: 20px;
+    width: 100%;
+    height: auto;
+    min-width: 400px;
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex: 1;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.text-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+
+
+.text-content p {
+    font-size: 16px;
+}
+
+.image-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.image-content img {
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    object-fit:  cover;
+}
+
+.view3 {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.view3 .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex: 1;
+    flex-direction: column;
+    box-sizing: border-box;
+    gap: 20px;
+    margin: 0px 60px 20px 60px;
+}
+
+.view3 .item ul {
+    margin: 20px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    background: #f0f0f0;
+}
+
+.footer-contact,
+.footer-info {
+    flex-basis: 33.33%;
+}
+
+.footer-info h3, .footer-contact h3 {
+    margin: 40px 0px 40px 0px;
+}
+
+.info-links p {
+    margin-bottom: 40px;
+}
+
+.footer-contact {
+    justify-content: center;
+}
+
+.footer-contact h3 {
+    text-align: center;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border: 1.5px solid #000;
+    border-radius: 4px;
+}
+
+.contact-form button {
+    width: 100%;
+    max-width: 320px;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px;
+    background: #f0f0f0;
+    color: #000;
+}
+
+@media screen and (max-width: 2594px) {
+    .view1 {
+        height: 90vh;
+    }
+
+    .view1 h1{
+        font-size: 56px;
+        font-weight: bold;
+    }
+
+    #greetEdit, #greetFinish {
+        font-size: 56px;
+        margin-top: 50px;
+        padding-top: 50px;
+    }
+
+    #greetingInput {
+        font-size: 56px;
+        width: 1000px;
+    }
+
+    .view1 .button {
+        font-size: 32px;
+    }
+
+    .logo {
+        font-size: 56px;
+    }
+
+    .navbar a {
+        font-size: 32px;
+    }
+
+   .view2 .item {
+    min-width: 1000px;
+    padding: 40px;
+   }
+
+   .text-content {
+    gap: 40px;
+   }
+
+   .text-content p {
+    font-size: 24px;
+}
+
+    .text-content h2 {
+        font-size: 56px;
+}
+
+    #palvelut {
+        font-size: 56px;
+        margin-left: 60px;
+}
+
+.view3 .item h3 {
+    font-size: 32px;
+}
+
+.item p, .item ul{
+    font-size: 24px;
+}
+
+.info-links {
+    font-size: 18px;
+}
+
+.footer-info h3, .footer-contact h3 {
+    font-size: 32px;
+}
+
+.footer-contact input, .footer-contact textarea {
+    font-size: 18px;
+}
+
+.footer-contact button {
+    font-size: 24px;
+}
+
+.footer-bottom {
+    font-size: 18px;
+}
+
+}
+
+@media screen and (max-width: 1440px) {
+    .view1 h1{
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    #greetEdit, #greetFinish {
+        font-size: 32px;
+        margin-top: 45px;
+        padding-top: 45px;
+    }
+
+    #greetingInput {
+        font-size: 32px;
+        width: 600px;
+    }
+
+    .view1 .button {
+        font-size: 18px;
+    }
+
+    .logo {
+        font-size: 32px;
+    }
+
+    .navbar a {
+        font-size: 18px;
+    }
+
+    .view2 .text-content h2 {
+        font-size: 24px;
+    }
+
+    .item p, .item ul{
+        font-size: 18px;
+    }
+
+    #palvelut {
+        font-size: 32px;
+    }
+
+    .view3 .item h3 {
+        font-size: 24px;
+    }
+
+    .info-links {
+        font-size: 16px;
+    }
+
+    .footer-info h3, .footer-contact h3 {
+        font-size: 24px;
+    }
+
+    .footer-contact input, .footer-contact textarea {
+        font-size: 16px;
+    }
+
+    .footer-contact button {
+        font-size: 18px;
+    }
+    
+    .footer-bottom {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .view1 h1{
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    #greetEdit, #greetFinish {
+        font-size: 24px;
+        margin-top: 35px;
+        padding-top: 35px;
+    }
+
+    #greetingInput {
+        font-size: 24px;
+        width: 430px;
+    }
+
+    .view1 .button {
+        font-size: 18px;
+    }
+
+    .logo {
+        font-size: 32px;
+    }
+
+    .navbar a {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 610px) {
+    .navbar li {
+        display: none;
+    }
+    
+    .menu-icon {
+        display: inline !important;
+    }
+
+    .view1 h1{
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    #greetEdit, #greetFinish {
+        font-size: 24px;
+        margin-top: 35px;
+        padding-top: 35px;
+    }
+
+    #greetingInput {
+        font-size: 24px;
+        width: 430px;
+    }
+
+    .view1 .button {
+        font-size: 18px;
+    }
+
+    .logo {
+        font-size: 32px;
+    }
+
+
+    .navbar a {
+        font-size: 18px;
+    }
+
+    .sidebar {
+        transform: translateX(100%);
+        display: block;
+    }
+}

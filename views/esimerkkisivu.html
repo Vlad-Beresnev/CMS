@@ -3,7 +3,7 @@
     <title>Esimerkkisivu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/css/home.css">
+    <link rel="stylesheet" type="text/css" href="/css/home-3.css">
     <link rel="stylesheet" type="text/css" href="/css/esimerkkisivu.css">
 </head>
 <body>
@@ -11,9 +11,12 @@
         <a class="logo" href="/home"> 
             <h1 class="logo">LOGO</h1>
         </a>
-        <i id="mode-icon" class="fa-regular fa-pen-to-square"></i>
+        
         <nav class="nav">
             <ul>
+                <li>
+                    <i id="mode-icon" class="fa-regular fa-pen-to-square"></i>
+                </li>
                 <li><a href="/home">Etusivu</a></li>
                 <li><a href="/home/esimerkkisivu">Esimerkkisivu</a></li>
                 <li><a href="/auth/login" type="button" class="button" id="login">Kirjaudu</a></li>
@@ -37,7 +40,7 @@
     <section class="esim-view1">
         
         <h1 id="esim-name"> <span><i id="esim-name-open" class="icon fa-solid fa-pen-to-square" style="color: #0096F5; cursor: pointer;"></i><i id="esim-name-finish" class="fa-solid fa-check" style="color: #0096F5; cursor: pointer; display: none;"></i></span></h1>
-        <input id="esim-name-input" type="text" placeholder="Enter the Title" style="display: none;">
+        <input id="esim-name-input" type="text" placeholder="Enter the Title" style="display: none;" maxLength="40">
 
         <div class="line-text">
             <p>Written by Human</p>
@@ -45,13 +48,13 @@
             <p>January 2, 2024</p>
         </div>
         <div class="image-container">
-            <img id="esim-image" src="/images/alien.png" alt="alien" />
+            <img id="esim-image" src="/images/skeleton.png" alt="alien" />
             <i id="esim-image-icon" class="icon fa-regular fa-image" style="display: inline;"></i>
             <div id="esim-image-store">
                 <p id="choosen-images-title">Choose The Image</p>
                 <img class="choosen-images" id="choose-image1" src="/images/cosmos.png" />
                 <img class="choosen-images" id="choose-image2" src="/images/mushrooms.png" />
-                <img class="choosen-images" id="choose-image3" src="/images/underwater.png" />
+                <img class="choosen-images" id="choose-image3" src="/images/skeleton.png" />
                 <img class="choosen-images" id="choose-image4" src="/images/vippasana.png" />
                 <img class="choosen-images" id="choose-image5" src="/images/alien.png" />
                 <img class="choosen-images" id="choose-image6" src="/images/eluminators.png" />

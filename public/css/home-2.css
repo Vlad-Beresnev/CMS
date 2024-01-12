@@ -8,8 +8,13 @@
 
 body {
     overflow-x: hidden !important;
+    width: 100%;
+
 }
 
+.view1, .view2, .view3, .footer {
+    width: 100%;
+}
 
 
 .navbar {
@@ -17,10 +22,10 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    width: 100%;
     z-index: 2;
     box-shadow: 0 1px 8px #ddd;
     background-color: #fff;
-    width: 100vw;
     top: 0;
     left: 0;
 }
@@ -33,7 +38,7 @@ body {
 
 .navbar li {
     list-style: none;
-    display: inline-block;
+    display: inline;
     padding: 0 20px;
 }
 
@@ -44,7 +49,6 @@ body {
 
 .nav li {
     padding: 10px 15px;
-    margin: 0 5px;
 }
 
 .button {
@@ -77,7 +81,7 @@ body {
     left: 0px;
     width: 100%;
     height: 100%;
-    background-color: white;
+    background-color: #fff;
     z-index: 1;
     overflow: hidden;
     transform: translateX(-100%);
@@ -125,7 +129,7 @@ body {
 }
 
 .menu-icon {
-    display: none;
+    display: none !important;
     cursor: pointer;
     z-index: 2;
     font-size: 32px;
@@ -138,23 +142,29 @@ body {
 .view1 {
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
-    width: 100% !important;
     height: 75vh;
+    width: auto;
     text-align: center;
     background: url('../images/anique-statue.png') center/cover no-repeat;
-    position: relative;
     margin-top: 75px;
-    margin-right: 0px;
+    padding: 0;
+    position: relative;
 }
 
 .view1 h1 {
-    position: absolute;
-    width: 85%;
+    order: 2; /* Push the h1 down */
     font-size: 32px;
     color: #ffff;
+    padding: 20px;
+    margin: 0 auto; /* Center horizontally */
+    max-width: 85%; /* Limit max width */
     overflow-wrap: break-word;
-    padding: 50px;
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .view1 h1:hover + #greetEdit {
@@ -164,31 +174,35 @@ body {
 
 
 .view1 button {
-    position: absolute;
+    order: 1; /* Pull the button up */
     padding: 10px;
-    margin-top: 250px;
     min-width: 300px;
     font-size: 18px;
     color: #fff;
     background-color: #000;
+    position: absolute;
+    top: calc(80% - 20px); /* Position above the h1 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#greetEdit, #greetFinish {
+    position: absolute;
+    display: none;
+    cursor: pointer;
+    top: 50%; /* Position directly below the h1 */
+    left: 50%; /* Center horizontally with respect to h1 */
+    transform: translateX(-50%); /* Center horizontally */
 }
 
 #greetEdit {
-    position: absolute;
-    display: none;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    margin-bottom: -100px;
-
+    /* Additional specific styles for #greetEdit if needed */
+    margin-top: 10px; /* Space below h1 */
 }
 
 #greetFinish {
-    position: absolute;
-    display: none;
-    cursor: pointer;
-    margin-right: 16px;
-    margin-bottom: -84px !important;
-    
+    /* Additional specific styles for #greetFinish if needed */
+    margin-top: 10px; /* Space below h1 */
 }
 
 #greetingInput {
@@ -214,10 +228,9 @@ html::-webkit-scrollbar {
 }
 
 .view2 {
-    width: 100% !important;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    padding: 20px 120px 20px 120px;
     gap: 20px;
 }
 
@@ -258,7 +271,6 @@ html::-webkit-scrollbar {
 }
 
 .view3 {
-    width: 100% !important;
     display: flex;
     flex: 1;
     flex-direction: row;
@@ -291,9 +303,7 @@ html::-webkit-scrollbar {
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
-    padding: 20px 20px 20px 20px;
     background: #f0f0f0;
-    width: 100%;
 }
 
 .footer-contact,
@@ -353,6 +363,7 @@ html::-webkit-scrollbar {
 
 
 
+
 @media (max-width: 1080px) and (min-width: 881px) {
     .view2 {
         flex-direction: column;
@@ -373,11 +384,10 @@ html::-webkit-scrollbar {
     }
 }
 
+
+
 @media (max-width: 880px) {
 
-
-    .view1, .view2, .view3   {
-    }
 
     .view2 {
         display: block;
@@ -389,23 +399,22 @@ html::-webkit-scrollbar {
         align-items: center;
         margin: 20px 0px 20 0px;
     }        
-
-    .image-content img {
-        
-    }
     
 
 }
 
 
+
 @media (max-width: 610px) {
 
-    .view1, .view2, .view3 {
-        width: auto !important;
+    .view1 {
+        width: 100% !important;
+        
+
     }
 
-    .view3 {
-        
+    .menu-icon {
+        display: inline !important;
     }
 
 
@@ -423,25 +432,20 @@ html::-webkit-scrollbar {
     }
 
     .view2 {
-        padding: 40px !important;
         display: block;
         justify-content: center;
        }
 
-       
        .view1, .view2, .view3, .footer-bottom {
-        width: 100%; /* Full width */
-        padding: 40px 20px; /* Adjust padding */
         align-items: center; /* Center content vertically */
         justify-content: center; /* Center content horizontally */
         text-align: center; /* Center text */
     }
+   
 
-    .view2, .view3 {
-        flex-direction: column; /* Stack items vertically */
-    }
+    
 
-    .view2 .item, .view3 .item {
+    .view3 .item {
         width: 100%; /* Full width for each item */
         margin: 20px 20px; /* Adjust margin */
         align-items: center;
@@ -508,3 +512,54 @@ html::-webkit-scrollbar {
         width: 95%;
     }
 } 
+
+
+@media screen and (max-width: 768px) {
+  
+
+    .logo {
+        margin-left: 10px; /* Adjust as needed */
+    }
+
+
+    .menu-icon {
+        display: block;
+    }
+
+    
+
+    
+
+    .image-content img {
+        width: 100%;
+        height: auto;
+    }
+
+    .footer, .footer-contact, .footer-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-contact, .footer-info {
+        width: 100%;
+    }
+
+    .contact-form, .contact-form input, .contact-form textarea, .contact-form button {
+        width: 100%;
+    }
+}
+
+/* Adjustments for very small screens like mobile phones */
+@media screen and (max-width: 480px) {
+    .nav li, .button {
+        padding: 10px 5px;
+    }
+
+    .view1 button, #greetEdit, #greetFinish, #greetingInput {
+        width: 90%;
+    }
+
+    .footer {
+        width: 100%;
+    }
+}

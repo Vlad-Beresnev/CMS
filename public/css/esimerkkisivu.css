@@ -1,27 +1,25 @@
 body {
     overflow-x: hidden;
+    width: 100%;
+    height: 100%;
     
 }
 
-.navbar {
-    top: 0;
-    left: 0;
-    width: 100%;
-}
 
 .esim-view1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 80px;
+    margin-top: 100px;
     padding: 40px;
-    gap: 20px;    
+    gap: 40px;    
 }
 
 .esim-view1 h1 {
-    font-size: 56px;
-  
+    font-size: 32px;
+    max-width: 50%;
+    text-align: center;
 }
 
 .esim-view1 img {
@@ -31,7 +29,8 @@ body {
 .esim-view1 p {
     font-size: 16px;
     line-height: 1.4;
-    max-width: 1025px;
+    max-width: 75%;
+    
 }
 
 
@@ -56,11 +55,14 @@ body {
 .image-container {
     position: relative;
     display: inline-block;
+    width: 100%;
 }
 
 #esim-image {
     display: block;
     width: 100%;
+    height: 50vh;
+    object-fit: cover;
 }
 
 #esim-image-store {
@@ -92,11 +94,49 @@ body {
 }
 
 #mode-icon {
-    position: absolute;
-    left: 155px;
+    margin-left: 0;
     cursor: pointer;
+    font-size: 24px;
+    z-index: 5;
 }
 
-.logo {
-    width: 60px;
+@media screen and (max-width: 2594px) {
+    #mode-icon {
+        font-size: 56px;
+    }
+
+    .esim-view1 {
+        margin-left: 120px;
+        margin-right: 120px;
+    }
+
+    .esim-view1 h1{
+        font-size: 56px;
+    }
+
+    .esim-view1 h2 {
+        font-size: 32px;
+    }
+
+    .esim-view1 p {
+        font-size: 24px;
+    }
+
+
+
+}
+@media screen and (max-width: 1440px) {
+    #mode-icon {
+        font-size: 32px;
+    }
+}
+@media screen and (max-width: 1024px) {
+    #mode-icon {
+        font-size: 32px;
+    }
+}
+@media screen and (max-width: 768px) {
+    #mode-icon {
+        font-size: 24px;
+    }
 }

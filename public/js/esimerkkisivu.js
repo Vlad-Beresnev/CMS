@@ -837,8 +837,8 @@ function switchReadMode(value) {
 document.addEventListener('DOMContentLoaded', () => {
     const modeIcon = document.getElementById('mode-icon');
     const icons = document.getElementsByClassName('icon');
-    let defaultMode = 'none';
-    
+    //let defaultMode = 'none';
+    let defaultMode = window.getComputedStyle(icons[0]).display;
 
     modeIcon.addEventListener('click', () => {
         defaultMode = defaultMode === 'none' ? 'inline' : 'none';
