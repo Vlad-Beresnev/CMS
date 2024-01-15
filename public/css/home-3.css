@@ -434,6 +434,8 @@ html::-webkit-scrollbar {
     font-size: 18px;
 }
 
+
+
 }
 
 @media screen and (max-width: 1440px) {
@@ -502,6 +504,16 @@ html::-webkit-scrollbar {
     }
 }
 
+@media screen and (max-width: 1024px) {
+    .view2 .item {
+        min-width: 400px;
+    }
+
+    .view3 .item {
+        min-width: 300px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .view1 h1{
         font-size: 24px;
@@ -530,10 +542,39 @@ html::-webkit-scrollbar {
     .navbar a {
         font-size: 18px;
     }
+
+    .footer .footer-contact {
+        font-size: 16px;
+    }
+
+    .view2 .item {
+        min-width: 200px;
+    }
+
+    .view2 .text-content p {
+        font-size: 16px;
+    }
+
+    .view3 .item p, .view3 .item ul {
+        font-size: 16px;
+    }
+
+    .view3 .item h3 {
+        font-size: 18px;
+    }
+
+    #palvelut {
+        font-size: 24px;
+    
+    }
+
+    .view3 .item {
+        min-width: 200px;
+    }
 }
 
 @media screen and (max-width: 610px) {
-    .navbar li {
+    .navbar li:not(#li-mode-icon) {
         display: none;
     }
     
@@ -573,5 +614,45 @@ html::-webkit-scrollbar {
     .sidebar {
         transform: translateX(100%);
         display: block;
+    }
+
+    .footer-contact h3 {
+        font-size: 18px;
+    }
+
+    .view3 .item {
+        min-width: 150px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .footer-contact input, .footer-contact textarea {
+        font-size: 14px;
+    }
+
+    .footer-contact button {
+        font-size: 16px;
+    }
+
+    #lueLisaa {
+        font-size: 16px;
+    }
+
+    .view2 .text-content h2 {
+        font-size: 18px;
+    }
+
+    .view3 .item {
+        min-width: 100px;
+    }
+
+    .sidebar nav {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .sidebar nav {
+        font-size: 16px;
     }
 }

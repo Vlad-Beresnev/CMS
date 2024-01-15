@@ -850,3 +850,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 )
 
+document.addEventListener('DOMContentLoaded', () => {
+    const imageIcon = document.getElementById('esim-image-icon');
+    const imageTitle = document.getElementById('choosen-images-title');
+    const images = document.getElementsByClassName('choosen-images');
+    imageIcon.addEventListener('click', () => {
+        imageTitle.style.display = 'inline';
+    })
+
+    for (let img of images) {
+        img.addEventListener('click', () => {
+            imageTitle.style.display = 'none';
+        })
+    }
+});

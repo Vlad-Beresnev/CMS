@@ -13,20 +13,26 @@ body {
 
 .gallery-card {
     display: flex;
+    flex-direction: row;
     width: 100%;
+    min-width: 1000px;
     max-width: 90%;
     margin-top: 100px;
     margin-bottom: 25px;
     height: auto;
-    align-items: flex-start;
+    
     justify-content: center;
+}
 
+.gallery-text {
+    align-items: flex-start;
 }
 
 .gallery-card img {
     width: 100%;
     height: auto;
     max-width: 50%;
+    object-fit: cover;
 
 }
 
@@ -47,7 +53,7 @@ body {
 
 .gallery-text {
     width: 100%;
-    padding: 0px 25px 50px 25px;
+    padding: 0px 0px 50px 0px;
 }
 
 .navigation-dots {
@@ -92,6 +98,11 @@ body {
     .gallery-card {
         max-width: 70%;
         margin-top: 200px;
+        min-width: 400px;
+    }
+    
+    .gallery-card img {
+        min-width: 400px;
     }
 
 
@@ -99,9 +110,46 @@ body {
         font-size: 16px;
     }
 
+    .gallery-text h3 {
+        font-size: 32px;
+    }
+
     .dot {
         height: 15px;
         width: 15px;
+    }
+
+    @media screen and (max-width: 1024px) {
+        .gallery-card {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .gallery-text p {
+            margin: 0px 10px 0px 10px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .gallery-card {
+            min-width: 200px;
+        }
+
+        .gallery-text h3 {
+            font-size: 24px;
+        }
+    }
+
+    @media screen and (max-width: 610px) {
+        .gallery-card img {
+            min-width: 300px;
+        }
+
+        .gallery-text h3 {
+            font-size: 18px;
+        }
     }
 
 }

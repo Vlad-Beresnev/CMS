@@ -18,7 +18,7 @@ body {
 
 .esim-view1 h1 {
     font-size: 32px;
-    max-width: 50%;
+    max-width: 100%;
     text-align: center;
 }
 
@@ -68,9 +68,9 @@ body {
 #esim-image-store {
     display: none;
     background-color: #086BA8;
-    width: 400px;
+    width: 100%;
     max-width: 350px;
-    height: 300px;
+    height: auto;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -80,24 +80,24 @@ body {
 }
 
 .choosen-images {
-    width: 75px;
-    height: 75px;
+    width: 100%;
+    max-width: 100px;
+    height: auto;
     object-fit: cover;
     margin: 10px;
     cursor: pointer;
 }
 
-#choosen-images-title {
-    position: absolute;
-    margin-top: 135px;
-    transform: translateX(-50%, -50%);
-}
 
 #mode-icon {
     margin-left: 0;
     cursor: pointer;
     font-size: 24px;
     z-index: 5;
+}
+
+#choosen-images-title {
+    font-size: 56px;
 }
 
 @media screen and (max-width: 2594px) {
@@ -129,6 +129,30 @@ body {
     #mode-icon {
         font-size: 32px;
     }
+
+    .esim-view1 {
+        padding: 20px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+
+    .esim-view1 h1 {
+        font-size: 32px;
+    
+    }
+
+    .esim-view1 p {
+        font-size: 16px;
+    }
+
+    .esim-view1 h2 {
+        font-size: 24px;
+    }
+
+    .line-text p {
+        font-size: 18px;
+    }
 }
 @media screen and (max-width: 1024px) {
     #mode-icon {
@@ -139,4 +163,47 @@ body {
     #mode-icon {
         font-size: 24px;
     }
+
+    .esim-view1 p {
+        max-width: 100%;
+    }
+
+    #esim-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .esim-view1 {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    #choosen-images-title {
+        font-size: 32px;
+    }
+}
+
+@media screen and (max-width: 610px) {
+
+    .esim-view1 {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .esim-view1 h1 {
+        font-size: 24px;
+    }
+
+    .esim-view1 h2 {
+        font-size: 18px;
+    }
+
+    .line-text p {
+        font-size: 16px;
+    }
+    
+}
+
+@media screen and (max-width: 360px) {
+    
 }
