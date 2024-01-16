@@ -7,6 +7,8 @@ body, html {
     align-items: center;
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
+    line-height: 1.4;
+    font-family: 'Barlow';
 }
 
 .coming-soon-container {
